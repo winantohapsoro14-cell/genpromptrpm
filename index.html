@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Prompt Rencana Pembelajaran & LKPD Mendalam</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;          /* Vibrant Blue */
+            --primary-dark: #1d4ed8;     /* Darker Blue */
+            --accent-yellow: #facc15;    /* Bright Yellow Accent */
+            --bg-body: #f1f5f9;          /* Light Slate Background */
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* HEADER BANNER STYLE BBGTK */
+        .hero-banner {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #4f46e5 100%);
+            color: white;
+            padding: 48px 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .hero-title-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .hero-title-badge .highlight {
+            color: var(--accent-yellow);
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #dbeafe;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-badge-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 20px 24px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 260px;
+        }
+
+        .hero-badge-icon {
+            font-size: 32px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .hero-badge-list {
+            list-style: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .hero-badge-list li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .hero-badge-list li::before {
+            content: '✓';
+            color: var(--accent-yellow);
+            font-weight: 800;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* KOLOM KIRI (FORM) */
+        .left-column {
+            flex: 1 1 55%;
+        }
+
+        /* KOLOM KANAN (STICKY SIDEBAR) */
+        .right-column {
+            flex: 1 1 45%;
+            position: sticky;
+            top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .container {
+                flex-direction: column;
+            }
+            .right-column {
+                position: static;
+                width: 100%;
+            }
+        }
+
+        /* CARD STYLE */
+        .card {
+            background-color: var(--card-bg);
+            padding: 28px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .card-header-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* SECTION BOX */
+        .section-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .badge-num {
+            background-color: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #1e293b;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-main);
+            background-color: var(--input-bg);
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+            color: #334155;
+            font-weight: 500;
+        }
+
+        .checkbox-item input {
+            margin-right: 8px;
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* KHUSUS OUTPUT PROMPT BOX */
+        .output-box-empty {
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius-md);
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f8fafc;
+            color: #64748b;
+        }
+
+        .output-box-empty .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .output-box {
+            width: 100%;
+            height: 320px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            background-color: #f8fafc;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            resize: vertical;
+            white-space: pre-wrap;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        /* BOX TIPS MENGGUNAKAN AI */
+        .tips-card {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .tips-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .tips-list {
+            padding-left: 20px;
+            font-size: 13px;
+            color: #1e3a8a;
+            line-height: 1.6;
+        }
+
+        .tips-list li {
+            margin-bottom: 8px;
+        }
+
+        .tips-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #ffffff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            box-shadow: none;
+        }
+
+        .btn-reset:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-copy {
+            background-color: #0d9488; /* Tosca / Dark Teal */
+        }
+
+        .btn-copy:hover {
+            background-color: #0f766e;
+        }
+
+        .btn-print {
+            background-color: #e11d48; /* Crimson / Merah */
+        }
+
+        .btn-print:hover {
+            background-color: #be123c;
+        }
+
+        /* FOOTER PENGEMBANG */
+        footer {
+            max-width: 1280px;
+            margin: 32px auto 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .footer-card strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* CSS KHUSUS CETAK PDF */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #outputPrompt, #outputPrompt * {
+                visibility: visible;
+            }
+            #outputPrompt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: auto;
+                border: none;
+                font-size: 14px;
+                white-space: pre-wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO BANNER TAMPILAN MODERN STYLE BBGTK -->
+    <div class="hero-banner">
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="hero-title-badge">
+                    <span>✨ Generator Prompt <span class="highlight">DEEP LEARNING</span></span>
+                </div>
+                <p class="hero-subtitle">
+                    Rancang Rencana Pembelajaran Mendalam & LKPD Siswa dengan AI jauh lebih mudah. Guru <strong>PASTI BISA!</strong>
+                </p>
+            </div>
+            <div class="hero-badge-card">
+                <div class="hero-badge-icon">💡</div>
+                <ul class="hero-badge-list">
+                    <li>Sederhana</li>
+                    <li>Memotivasi</li>
+                    <li>Tepat Sasaran</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        
+        <!-- KOLOM KIRI: FORM INPUT -->
+        <div class="left-column">
+            <div class="card">
+                <h1 class="card-header-title">Isi Form Deep Learning</h1>
+                <p class="card-header-desc">Lengkapi parameter di bawah untuk menghasilkan prompt pembelajaran mendalam atau LKPD siswa secara otomatis.</p>
+
+                <form id="promptForm">
+
+                    <!-- TARGET AI & FORMAT -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">A</span> Target AI, Tipe Prompt & Format Output
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Tipe Output Prompt</label>
+                            <select id="tipePrompt">
+                                <option value="rpm">Rencana Pembelajaran Mendalam (RPM / Modul Ajar)</option>
+                                <option value="lkpd">Lembar Kerja Peserta Didik (LKPD Siswa)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih AI yang Akan Digunakan</label>
+                            <select id="targetAI">
+                                <option value="ChatGPT">ChatGPT (Optimasi Markdown & Tabel)</option>
+                                <option value="Claude">Claude AI (Optimasi Pembelajaran Mendalam & Struktur Detail)</option>
+                                <option value="Gemini">Google Gemini (Optimasi Format Ringkas & Responsif)</option>
+                                <option value="Umum">Umum / Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Format Hasil Output yang Diminta ke AI</label>
+                            <select id="formatOutputAI">
+                                <option value="tabel_pdf">Tabel Matriks Dokumen (Siap Copy ke PDF/Word)</option>
+                                <option value="dokumen_lengkap">Dokumen Resmi (Format Judul, Bab & Paragraf)</option>
+                                <option value="html_pdf">Kode HTML/CSS Siap Download & Cetak PDF</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 1. IDENTIFIKASI -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">1</span> Fitur Identifikasi
+                        </div>
+                        <div class="form-group">
+                            <label>Mata Pelajaran & Fase/Kelas</label>
+                            <input type="text" id="mapel" placeholder="Contoh: IPA / Fase D Kelas 7" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kesiapan & Karakteristik Peserta Didik</label>
+                            <input type="text" id="pesertaDidik" placeholder="Contoh: Pengetahuan awal heterogen, minat gaya belajar visual">
+                        </div>
+                        <div class="form-group">
+                            <label>Analisis Materi Pelajaran</label>
+                            <input type="text" id="materiPelajaran" placeholder="Contoh: Pengetahuan konseptual dan prosedural">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimensi Profil Lulusan (DPL)</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL1 Keimanan & Ketakwaan"> DPL1 Imtak</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL2 Kewargaan"> DPL2 Kewargaan</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL3 Penalaran Kritis" checked> DPL3 Penalaran Kritis</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL4 Kreativitas"> DPL4 Kreativitas</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL5 Kolaborasi" checked> DPL5 Kolaborasi</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL6 Kemandirian"> DPL6 Kemandirian</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL7 Kesehatan"> DPL7 Kesehatan</label>
+                                <label class="checkbox-item"><input type="checkbox" name="dpl" value="DPL8 Komunikasi" checked> DPL8 Komunikasi</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. DESAIN PEMBELAJARAN -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">2</span> Fitur Desain Pembelajaran
+                        </div>
+                        <div class="form-group">
+                            <label>Capaian Pembelajaran (CP)</label>
+                            <input type="text" id="cp" placeholder="Contoh: Peserta didik mampu mengidentifikasi interaksi makhluk hidup">
+                        </div>
+                        <div class="form-group">
+                            <label>Lintas Disiplin Ilmu</label>
+                            <input type="text" id="lintasIlmu" placeholder="Contoh: Bahasa Indonesia (Laporan Observasi)">
+                        </div>
+                        <div class="form-group">
+                            <label>Topik Pembelajaran</label>
+                            <input type="text" id="topik" placeholder="Contoh: Ekosistem dan Interaksi Makhluk Hidup" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Alokasi Waktu / Pertemuan</label>
+                            <input type="text" id="waktu" placeholder="Contoh: 2 Pertemuan (4 JP)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Praktik Pedagogis (Model Pembelajaran)</label>
+                            <select id="pedagogis" onchange="togglePedagogisLainnya()">
+                                <option value="Problem Based Learning (PBL)">Problem Based Learning (PBL)</option>
+                                <option value="Project Based Learning (PjBL)">Project Based Learning (PjBL)</option>
+                                <option value="Inkuiri">Inkuiri</option>
+                                <option value="Kontekstual">Kontekstual</option>
+                                <option value="Kooperatif">Kooperatif</option>
+                                <option value="Lainnya">Lainnya...</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="groupPedagogisLainnya" style="display: none;">
+                            <label>Tuliskan Praktik Pedagogis Lainnya</label>
+                            <input type="text" id="pedagogisLainnya" placeholder="Contoh: Discovery Learning">
+                        </div>
+                        <div class="form-group">
+                            <label>Kemitraan Pembelajaran</label>
+                            <input type="text" id="kemitraan" placeholder="Contoh: Orang tua siswa, komunitas lingkungan">
+                        </div>
+                        <div class="form-group">
+                            <label>Lingkungan Pembelajaran</label>
+                            <input type="text" id="lingkungan" placeholder="Contoh: Ruang kelas, taman sekolah, LMS">
+                        </div>
+                        <div class="form-group">
+                            <label>Pemanfaatan Digital</label>
+                            <input type="text" id="pemanfaatanDigital" placeholder="Contoh: Quizizz, Liveworksheets, Canva">
+                        </div>
+                    </div>
+
+                    <!-- 3. PENGALAMAN BELAJAR -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">3</span> Fitur Pengalaman Belajar
+                        </div>
+                        <div class="form-group">
+                            <label>Prinsip Pembelajaran</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Berkesadaran (Mindful)" checked> Berkesadaran</label>
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Bermakna (Meaningful)" checked> Bermakna</label>
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Menggembirakan (Joyful)" checked> Menggembirakan</label>
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Interaktif & Kolaboratif"> Interaktif</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Fokus Kegiatan Tahap Inti</label>
+                            <input type="text" id="fokusPengalaman" placeholder="Contoh: Observasi lapangan, diskusi kelompok, pemecahan masalah">
+                        </div>
+                    </div>
+
+                    <!-- 4. ASESMEN PEMBELAJARAN -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">4</span> Fitur Asesmen Pembelajaran
+                        </div>
+                        <div class="form-group">
+                            <label>Asesmen Awal (Diagnostic)</label>
+                            <input type="text" id="asesmenAwal" placeholder="Contoh: Tes lisan/kuis singkat pengetahuan awal">
+                        </div>
+                        <div class="form-group">
+                            <label>Asesmen Proses (Formative)</label>
+                            <input type="text" id="asesmenProses" placeholder="Contoh: Observasi kinerja, penilaian peer assessment">
+                        </div>
+                        <div class="form-group">
+                            <label>Asesmen Akhir (Summative)</label>
+                            <input type="text" id="asesmenAkhir" placeholder="Contoh: Penilaian produk/proyek atau tes tertulis">
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL AKSI FORM -->
+                    <div class="btn-group">
+                        <button type="button" class="btn" onclick="generatePrompt()">🚀 Generate Prompt</button>
+                        <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- KOLOM KANAN: STICKY SIDEBAR (HASIL PROMPT & TIPS) -->
+        <div class="right-column">
+            
+            <!-- HASIL PROMPT CARD -->
+            <div class="card">
+                <h2 class="card-header-title">Hasil Prompt AI</h2>
+                <p class="card-header-desc">Salin teks di bawah ini. Anda juga dapat <strong>mengeditnya secara manual</strong> di dalam kotak jika ada yang kurang pas.</p>
+                
+                <!-- Tampilan Saat Belum Generate -->
+                <div id="emptyPromptState" class="output-box-empty">
+                    <div class="icon">💡</div>
+                    <strong style="display:block; color: #334155; margin-bottom: 4px;">Belum ada prompt</strong>
+                    <p style="font-size: 12px;">Isi form di sebelah kiri lalu klik tombol <strong>Generate Prompt</strong> untuk melihat hasilnya.</p>
+                </div>
+
+                <!-- Textarea Hasil (Awalnya tersembunyi) -->
+                <div id="outputContainer" style="display: none;">
+                    <textarea id="outputPrompt" class="output-box" placeholder="Hasil prompt AI akan muncul di sini..."></textarea>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-copy" onclick="copyPrompt()">Salin Prompt</button>
+                        <button type="button" class="btn btn-print" onclick="printPDF()">Cetak (PDF)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIPS MENGGUNAKAN AI -->
+            <div class="tips-card">
+                <div class="tips-title">
+                    <span>💡</span> Tips Menggunakan AI:
+                </div>
+                <ul class="tips-list">
+                    <li>Jika hasil AI kurang pas, minta AI merevisinya. Contoh: <em>"Buat lebih sederhana lagi bahasanya"</em>.</li>
+                    <li>Jangan ragu untuk berdiskusi bolak-balik dengan AI.</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER NAMA PENGEMBANG -->
+    <footer>
+        <div class="footer-card">
+            Generator Prompt Rencana Pembelajaran Mendalam & LKPD &bull; Dikembangkan oleh: <strong>Winanto Tri Hapsoro, S.Pd.I., Gr.</strong> (SMA Negeri 8 Raja Ampat)
+        </div>
+    </footer>
+
+    <script>
+        function togglePedagogisLainnya() {
+            const pedagogisSelect = document.getElementById('pedagogis').value;
+            const groupLainnya = document.getElementById('groupPedagogisLainnya');
+            
+            if (pedagogisSelect === 'Lainnya') {
+                groupLainnya.style.display = 'block';
+            } else {
+                groupLainnya.style.display = 'none';
+            }
+        }
+
+        function generatePrompt() {
+            const tipePrompt = document.getElementById('tipePrompt').value;
+            const targetAI = document.getElementById('targetAI').value;
+            const formatOutputAI = document.getElementById('formatOutputAI').value;
+            
+            let aiInstruction = '';
+            if (targetAI === 'ChatGPT') {
+                aiInstruction = `[OPTIMASI CHATGPT: Hindari basa-basi pembuka/penutup. Langsung berikan output dokumen lengkap dan terstruktur rapi.]`;
+            } else if (targetAI === 'Claude') {
+                aiInstruction = `[OPTIMASI CLAUDE AI: Berikan analisis mendalam pada setiap komponen, sertakan contoh operasional konkret, dan gunakan tata bahasa profesional.]`;
+            } else if (targetAI === 'Gemini') {
+                aiInstruction = `[OPTIMASI GEMINI: Sajikan format dokumen yang rapi, berikan poin-poin yang padat, dan hindari pemotongan teks.]`;
+            } else {
+                aiInstruction = `[Instruksi: Buatkan respon berbentuk dokumen perencanaan yang komprehensif.]`;
+            }
+
+            let pdfInstruction = '';
+            if (formatOutputAI === 'tabel_pdf') {
+                pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
+Buatkan hasil dalam bentuk **DOKUMEN TABEL MATRIKS LENGKAP** yang disesuaikan untuk langsung dicetak menjadi dokumen PDF atau disalin ke MS Word. Gunakan header tabel yang jelas, garis pemisah, dan format teks yang rapi.`;
+            } else if (formatOutputAI === 'dokumen_lengkap') {
+                pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
+Sajikan hasil akhir dalam bentuk **DOKUMEN RESMI**.
+Gunakan struktur dokumen sebagai berikut:
+1. JUDUL DOKUMEN & IDENTITAS
+2. BAB I: IDENTIFIKASI & DESAIN PEMBELAJARAN
+3. BAB II: SKENARIO PENGALAMAN BELAJAR / AKTIVITAS
+4. BAB III: INSTRUMEN ASESMEN / EVALUASI`;
+            } else if (formatOutputAI === 'html_pdf') {
+                pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
+Sajikan seluruh hasil dalam satu blok **KODE HTML & CSS LENGKAP (A4 Print Ready)**. Include style CSS "@media print" sehingga ketika dibuka di browser dapat langsung di-cetak ke PDF.`;
+            }
+
+            // Inputs
+            const mapel = document.getElementById('mapel').value || '[Mata Pelajaran / Fase]';
+            const pesertaDidik = document.getElementById('pesertaDidik').value || 'Identifikasi kesiapan peserta didik';
+            const materiPelajaran = document.getElementById('materiPelajaran').value || 'Analisis materi pelajaran';
+            
+            const cp = document.getElementById('cp').value || 'Capaian Pembelajaran resmi sesuai fase';
+            const lintasIlmu = document.getElementById('lintasIlmu').value || 'Mata pelajaran terkait yang relevan';
+            const topik = document.getElementById('topik').value || '[Topik Pembelajaran]';
+            const waktu = document.getElementById('waktu').value || '[Alokasi Waktu]';
+            
+            const pedagogisSelect = document.getElementById('pedagogis').value;
+            let pedagogis = pedagogisSelect;
+            if (pedagogisSelect === 'Lainnya') {
+                const customPedagogis = document.getElementById('pedagogisLainnya').value;
+                pedagogis = customPedagogis ? customPedagogis : 'Model Pembelajaran Lainnya';
+            }
+
+            const kemitraan = document.getElementById('kemitraan').value || 'Lingkungan sekolah, luar sekolah, orang tua, komunitas';
+            const lingkungan = document.getElementById('lingkungan').value || 'Ruang fisik, ruang virtual, dan budaya belajar';
+            const pemanfaatanDigital = document.getElementById('pemanfaatanDigital').value || 'Perpustakaan digital, forum diskusi daring';
+
+            const selectedDPL = [];
+            document.querySelectorAll('input[name="dpl"]:checked').forEach(cb => {
+                selectedDPL.push(cb.value);
+            });
+            const dplText = selectedDPL.length > 0 ? selectedDPL.join(', ') : 'DPL3 Penalaran Kritis, DPL5 Kolaborasi, DPL8 Komunikasi';
+
+            const selectedPrinsip = [];
+            document.querySelectorAll('input[name="prinsip"]:checked').forEach(cb => {
+                selectedPrinsip.push(cb.value);
+            });
+            const prinsipText = selectedPrinsip.length > 0 ? selectedPrinsip.join(', ') : 'Berkesadaran, Bermakna, Menggembirakan';
+
+            const fokusPengalaman = document.getElementById('fokusPengalaman').value || 'Siswa aktif terlibat dalam pengalaman belajar memahami, mengaplikasi, dan merefleksi';
+            const asesmenAwal = document.getElementById('asesmenAwal').value || 'Tes lisan/kuis singkat untuk mengukur pengetahuan awal & minat';
+            const asesmenProses = document.getElementById('asesmenProses').value || 'Observasi kinerja, penilaian antar teman, dan lembar kerja';
+            const asesmenAkhir = document.getElementById('asesmenAkhir').value || 'Penilaian produk/proyek atau tes tertulis komprehensif';
+
+            let template = '';
+
+            if (tipePrompt === 'rpm') {
+                // TEMPLATE PROMPT RENCANA PEMBELAJARAN
+                template = `${aiInstruction}
+
+Bertindaklah sebagai Ahli Kurikulum dan Pengembang Perencanaan Pembelajaran Mendalam (Deep Learning).
+
+Buatkan **Rencana Pembelajaran Mendalam (RPM / Modul Ajar)** berdasarkan parameter berikut:
+- **Target Platform AI**: ${targetAI}
+- **Mata Pelajaran & Fase/Kelas**: ${mapel}
+- **Topik Pembelajaran**: ${topik}
+- **Alokasi Waktu**: ${waktu}
+- **Praktik Pedagogis Utama**: ${pedagogis}
+- **Dimensi Profil Lulusan (DPL)**: ${dplText}
+- **Prinsip Pembelajaran**: ${prinsipText}
+
+${pdfInstruction}
+
+--- STRUKTUR ISI DOKUMEN ---
+1. **Identifikasi**: 
+   - Peserta Didik: ${pesertaDidik}
+   - Materi Pelajaran: ${materiPelajaran}
+   - DPL: ${dplText}
+2. **Desain Pembelajaran**:
+   - Capaian Pembelajaran (CP): ${cp}
+   - Lintas Disiplin Ilmu: ${lintasIlmu}
+   - Tujuan Pembelajaran
+   - Topik & Alokasi Waktu: ${topik} (${waktu})
+   - Praktik Pedagogis: ${pedagogis}
+   - Kemitraan: ${kemitraan} | Lingkungan: ${lingkungan} | Digital: ${pemanfaatanDigital}
+3. **Pengalaman Belajar**:
+   - Awal (Prinsip: ${prinsipText})
+   - Inti (Fokus: ${fokusPengalaman})
+   - Penutup
+4. **Asesmen Pembelajaran**:
+   - Asesmen Awal: ${asesmenAwal}
+   - Asesmen Proses: ${asesmenProses}
+   - Asesmen Akhir: ${asesmenAkhir}`;
+            } else {
+                // TEMPLATE PROMPT LKPD SISWA
+                template = `${aiInstruction}
+
+Bertindaklah sebagai Spesialis Pengembang Lembar Kerja Peserta Didik (LKPD) Interaktif dan Berorientasi Pembelajaran Mendalam (Deep Learning).
+
+Buatkan **Lembar Kerja Peserta Didik (LKPD) Siap Pakai untuk Siswa** berdasarkan parameter berikut:
+- **Target Platform AI**: ${targetAI}
+- **Mata Pelajaran & Fase/Kelas**: ${mapel}
+- **Topik Pembelajaran**: ${topik}
+- **Alokasi Waktu**: ${waktu}
+- **Model Pembelajaran**: ${pedagogis}
+- **Dimensi Profil Lulusan (DPL) yang Ditingkatkan**: ${dplText}
+- **Prinsip Pembelajaran**: ${prinsipText}
+
+${pdfInstruction}
+
+--- STRUKTUR ISI DOKUMEN LKPD SISWA ---
+1. **Header LKPD**:
+   - Judul LKPD Menarik & Bahasa Ramah Siswa
+   - Identitas Siswa/Kelompok (Nama, Kelas, Tanggal)
+   - Capaian & Tujuan Pembelajaran Singkat: ${cp}
+2. **Petunjuk Penggunaan & Alat/Bahan**:
+   - Petunjuk kerja yang jelas dan memotivasi
+   - Integrasi Digital: ${pemanfaatanDigital}
+3. **Aktivitas Pembelajaran Mendalam**:
+   - **Stimulasi & Pertanyaan Pemantik**: Menggugah rasa ingin tahu siswa tentang topik ${topik}
+   - **Langkah Kerja / Eksplorasi Kelompok**: Berbasis ${pedagogis} (Fokus: ${fokusPengalaman})
+   - **Ruang Diskusi & Hasil Observasi**: Tabel/Isian tempat siswa mencatat ide & solusi
+4. **Evaluasi & Refleksi Diri**:
+   - Pertanyaan Reflektif (Mengukur kesadaran belajar/Mindful & Bermakna)
+   - Lembar Penilaian Mandiri/Teman Sejawat`;
+            }
+
+            document.getElementById('emptyPromptState').style.display = 'none';
+            document.getElementById('outputContainer').style.display = 'block';
+            document.getElementById('outputPrompt').value = template;
+        }
+
+        function copyPrompt() {
+            const outputText = document.getElementById('outputPrompt');
+            if (!outputText.value) return;
+            outputText.select();
+            document.execCommand('copy');
+            alert('Prompt berhasil disalin! Silakan paste ke AI favorit Anda.');
+        }
+
+        function printPDF() {
+            const outputText = document.getElementById('outputPrompt').value;
+            if (!outputText) {
+                alert('Belum ada prompt yang di-generate!');
+                return;
+            }
+            window.print();
+        }
+
+        function resetForm() {
+            document.getElementById('promptForm').reset();
+            document.getElementById('emptyPromptState').style.display = 'block';
+            document.getElementById('outputContainer').style.display = 'none';
+            document.getElementById('outputPrompt').value = '';
+        }
+    </script>
+</body>
+</html>
