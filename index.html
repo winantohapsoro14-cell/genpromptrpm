@@ -291,7 +291,7 @@
 
         .output-box {
             width: 100%;
-            height: 320px;
+            height: 360px;
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 12px;
             background-color: #f8fafc;
@@ -475,7 +475,7 @@
                     <!-- TARGET AI & FORMAT -->
                     <div class="section-box">
                         <div class="section-title">
-                            <span class="badge-num">A</span> Target AI, Tipe Prompt & Format Output
+                            <span class="badge-num">⚙️</span> Target AI, Tipe Prompt & Format Output
                         </div>
                         <div class="form-group">
                             <label>Pilih Tipe Output Prompt</label>
@@ -503,14 +503,45 @@
                         </div>
                     </div>
 
-                    <!-- 1. IDENTIFIKASI -->
+                    <!-- A. IDENTITAS MODUL / PEMBELAJARAN -->
                     <div class="section-box">
                         <div class="section-title">
-                            <span class="badge-num">1</span> Fitur Identifikasi
+                            <span class="badge-num">A</span> Identitas Modul / Pembelajaran
                         </div>
                         <div class="form-group">
-                            <label>Mata Pelajaran & Fase/Kelas</label>
-                            <input type="text" id="mapel" placeholder="Contoh: IPA / Fase D Kelas 7" required>
+                            <label>Satuan Pendidikan</label>
+                            <input type="text" id="satuanPendidikan" placeholder="Contoh: SMAN 8 Raja Ampat">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Penyusun</label>
+                            <input type="text" id="namaPenyusun" placeholder="Contoh: Winanto Tri Hapsoro, S.Pd.I., Gr.">
+                        </div>
+                        <div class="form-group">
+                            <label>Mata Pelajaran / Fase</label>
+                            <input type="text" id="mapelFase" placeholder="Contoh: IPA / Fase D">
+                        </div>
+                        <div class="form-group">
+                            <label>Kelas / Semester</label>
+                            <input type="text" id="kelasSemester" placeholder="Contoh: Kelas 7 / Ganjil">
+                        </div>
+                        <div class="form-group">
+                            <label>Topik / Sub topik atau Tema / Sub Tema</label>
+                            <input type="text" id="topikSubTopik" placeholder="Contoh: Ekosistem / Interaksi Makhluk Hidup" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Alokasi Waktu</label>
+                            <input type="text" id="alokasiWaktu" placeholder="Contoh: 2 Pertemuan (4 JP)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tahun Pelajaran</label>
+                            <input type="text" id="tahunPelajaran" placeholder="Contoh: 2024/2025">
+                        </div>
+                    </div>
+
+                    <!-- B. FITUR IDENTIFIKASI -->
+                    <div class="section-box">
+                        <div class="section-title">
+                            <span class="badge-num">B</span> Fitur Identifikasi
                         </div>
                         <div class="form-group">
                             <label>Kesiapan & Karakteristik Peserta Didik</label>
@@ -535,10 +566,10 @@
                         </div>
                     </div>
 
-                    <!-- 2. DESAIN PEMBELAJARAN -->
+                    <!-- C. FITUR DESAIN PEMBELAJARAN -->
                     <div class="section-box">
                         <div class="section-title">
-                            <span class="badge-num">2</span> Fitur Desain Pembelajaran
+                            <span class="badge-num">C</span> Fitur Desain Pembelajaran
                         </div>
                         <div class="form-group">
                             <label>Capaian Pembelajaran (CP)</label>
@@ -547,14 +578,6 @@
                         <div class="form-group">
                             <label>Lintas Disiplin Ilmu</label>
                             <input type="text" id="lintasIlmu" placeholder="Contoh: Bahasa Indonesia (Laporan Observasi)">
-                        </div>
-                        <div class="form-group">
-                            <label>Topik Pembelajaran</label>
-                            <input type="text" id="topik" placeholder="Contoh: Ekosistem dan Interaksi Makhluk Hidup" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Alokasi Waktu / Pertemuan</label>
-                            <input type="text" id="waktu" placeholder="Contoh: 2 Pertemuan (4 JP)" required>
                         </div>
                         <div class="form-group">
                             <label>Praktik Pedagogis (Model Pembelajaran)</label>
@@ -585,30 +608,38 @@
                         </div>
                     </div>
 
-                    <!-- 3. PENGALAMAN BELAJAR -->
+                    <!-- D. FITUR PENGALAMAN BELAJAR -->
                     <div class="section-box">
                         <div class="section-title">
-                            <span class="badge-num">3</span> Fitur Pengalaman Belajar
+                            <span class="badge-num">D</span> Fitur Pengalaman Belajar
                         </div>
                         <div class="form-group">
-                            <label>Prinsip Pembelajaran</label>
+                            <label>Prinsip Pembelajaran Mendalam</label>
                             <div class="checkbox-grid">
-                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Berkesadaran (Mindful)" checked> Berkesadaran</label>
                                 <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Bermakna (Meaningful)" checked> Bermakna</label>
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Berkesadaran (Mindful)" checked> Berkesadaran</label>
                                 <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Menggembirakan (Joyful)" checked> Menggembirakan</label>
-                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Interaktif & Kolaboratif"> Interaktif</label>
+                                <label class="checkbox-item"><input type="checkbox" name="prinsip" value="Interaktif & Kolaboratif"> Interaktif & Kolaboratif</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Fokus Kegiatan Tahap Inti</label>
-                            <input type="text" id="fokusPengalaman" placeholder="Contoh: Observasi lapangan, diskusi kelompok, pemecahan masalah">
+                            <label>1. Memahami (Eksplorasi Konsep & Stimulasi)</label>
+                            <input type="text" id="pengalamanMemahami" placeholder="Contoh: Mengamati lingkungan sekitar, menyimak video pemantik">
+                        </div>
+                        <div class="form-group">
+                            <label>2. Mengaplikasikan (Aktivitas & Pemecahan Masalah)</label>
+                            <input type="text" id="pengalamanMengaplikasikan" placeholder="Contoh: Diskusi kelompok, analisis kasus, eksperimen mandiri">
+                        </div>
+                        <div class="form-group">
+                            <label>3. Merefleksikan (Evaluasi Diri & Umpan Balik)</label>
+                            <input type="text" id="pengalamanMerefleksikan" placeholder="Contoh: Jurnal refleksi, presentasi hasil, kesimpulan bersama">
                         </div>
                     </div>
 
-                    <!-- 4. ASESMEN PEMBELAJARAN -->
+                    <!-- E. FITUR ASESMEN PEMBELAJARAN -->
                     <div class="section-box">
                         <div class="section-title">
-                            <span class="badge-num">4</span> Fitur Asesmen Pembelajaran
+                            <span class="badge-num">E</span> Fitur Asesmen Pembelajaran
                         </div>
                         <div class="form-group">
                             <label>Asesmen Awal (Diagnostic)</label>
@@ -717,24 +748,31 @@ Buatkan hasil dalam bentuk **DOKUMEN TABEL MATRIKS LENGKAP** yang disesuaikan un
                 pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
 Sajikan hasil akhir dalam bentuk **DOKUMEN RESMI**.
 Gunakan struktur dokumen sebagai berikut:
-1. JUDUL DOKUMEN & IDENTITAS
-2. BAB I: IDENTIFIKASI & DESAIN PEMBELAJARAN
-3. BAB II: SKENARIO PENGALAMAN BELAJAR / AKTIVITAS
-4. BAB III: INSTRUMEN ASESMEN / EVALUASI`;
+1. A. IDENTITAS MODUL / PEMBELAJARAN
+2. B. FITUR IDENTIFIKASI
+3. C. FITUR DESAIN PEMBELAJARAN
+4. D. FITUR PENGALAMAN BELAJAR (MEMAHAMI, MENGAPLIKASIKAN, MEREFLEKSIKAN)
+5. E. FITUR ASESMEN PEMBELAJARAN`;
             } else if (formatOutputAI === 'html_pdf') {
                 pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
 Sajikan seluruh hasil dalam satu blok **KODE HTML & CSS LENGKAP (A4 Print Ready)**. Include style CSS "@media print" sehingga ketika dibuka di browser dapat langsung di-cetak ke PDF.`;
             }
 
-            // Inputs
-            const mapel = document.getElementById('mapel').value || '[Mata Pelajaran / Fase]';
+            // Identitas Inputs
+            const satuanPendidikan = document.getElementById('satuanPendidikan').value || '[Satuan Pendidikan]';
+            const namaPenyusun = document.getElementById('namaPenyusun').value || '[Nama Penyusun]';
+            const mapelFase = document.getElementById('mapelFase').value || '[Mata Pelajaran / Fase]';
+            const kelasSemester = document.getElementById('kelasSemester').value || '[Kelas / Semester]';
+            const topikSubTopik = document.getElementById('topikSubTopik').value || '[Topik / Sub topik atau Tema / Sub Tema]';
+            const alokasiWaktu = document.getElementById('alokasiWaktu').value || '[Alokasi Waktu]';
+            const tahunPelajaran = document.getElementById('tahunPelajaran').value || '[Tahun Pelajaran]';
+
+            // Fitur Inputs
             const pesertaDidik = document.getElementById('pesertaDidik').value || 'Identifikasi kesiapan peserta didik';
             const materiPelajaran = document.getElementById('materiPelajaran').value || 'Analisis materi pelajaran';
             
             const cp = document.getElementById('cp').value || 'Capaian Pembelajaran resmi sesuai fase';
             const lintasIlmu = document.getElementById('lintasIlmu').value || 'Mata pelajaran terkait yang relevan';
-            const topik = document.getElementById('topik').value || '[Topik Pembelajaran]';
-            const waktu = document.getElementById('waktu').value || '[Alokasi Waktu]';
             
             const pedagogisSelect = document.getElementById('pedagogis').value;
             let pedagogis = pedagogisSelect;
@@ -757,9 +795,14 @@ Sajikan seluruh hasil dalam satu blok **KODE HTML & CSS LENGKAP (A4 Print Ready)
             document.querySelectorAll('input[name="prinsip"]:checked').forEach(cb => {
                 selectedPrinsip.push(cb.value);
             });
-            const prinsipText = selectedPrinsip.length > 0 ? selectedPrinsip.join(', ') : 'Berkesadaran, Bermakna, Menggembirakan';
+            const prinsipText = selectedPrinsip.length > 0 ? selectedPrinsip.join(', ') : 'Bermakna, Berkesadaran, Menggembirakan';
 
-            const fokusPengalaman = document.getElementById('fokusPengalaman').value || 'Siswa aktif terlibat dalam pengalaman belajar memahami, mengaplikasi, dan merefleksi';
+            // Fitur Pengalaman Belajar Inputs
+            const pengalamanMemahami = document.getElementById('pengalamanMemahami').value || 'Siswa mengobservasi, mengeksplorasi konsep, dan membangun pemahaman awal.';
+            const pengalamanMengaplikasikan = document.getElementById('pengalamanMengaplikasikan').value || 'Siswa melatih pemahaman melalui aktivitas kelompok, studi kasus, atau karya nyata.';
+            const pengalamanMerefleksikan = document.getElementById('pengalamanMerefleksikan').value || 'Siswa mengevaluasi proses belajar, menarik kesimpulan, dan memberikan masukan.';
+
+            // Fitur Asesmen Inputs
             const asesmenAwal = document.getElementById('asesmenAwal').value || 'Tes lisan/kuis singkat untuk mengukur pengetahuan awal & minat';
             const asesmenProses = document.getElementById('asesmenProses').value || 'Observasi kinerja, penilaian antar teman, dan lembar kerja';
             const asesmenAkhir = document.getElementById('asesmenAkhir').value || 'Penilaian produk/proyek atau tes tertulis komprehensif';
@@ -774,35 +817,52 @@ Bertindaklah sebagai Ahli Kurikulum dan Pengembang Perencanaan Pembelajaran Mend
 
 Buatkan **Rencana Pembelajaran Mendalam (RPM / Modul Ajar)** berdasarkan parameter berikut:
 - **Target Platform AI**: ${targetAI}
-- **Mata Pelajaran & Fase/Kelas**: ${mapel}
-- **Topik Pembelajaran**: ${topik}
-- **Alokasi Waktu**: ${waktu}
+- **Satuan Pendidikan**: ${satuanPendidikan}
+- **Nama Penyusun**: ${namaPenyusun}
+- **Mata Pelajaran / Fase**: ${mapelFase}
+- **Kelas / Semester**: ${kelasSemester}
+- **Topik / Sub topik atau Tema / Sub Tema**: ${topikSubTopik}
+- **Alokasi Waktu**: ${alokasiWaktu}
+- **Tahun Pelajaran**: ${tahunPelajaran}
 - **Praktik Pedagogis Utama**: ${pedagogis}
 - **Dimensi Profil Lulusan (DPL)**: ${dplText}
-- **Prinsip Pembelajaran**: ${prinsipText}
+- **Prinsip Pembelajaran Mendalam**: ${prinsipText}
 
 ${pdfInstruction}
 
 --- STRUKTUR ISI DOKUMEN ---
-1. **Identifikasi**: 
-   - Peserta Didik: ${pesertaDidik}
-   - Materi Pelajaran: ${materiPelajaran}
-   - DPL: ${dplText}
-2. **Desain Pembelajaran**:
+A. **Identitas Modul / Pembelajaran**:
+   - Satuan Pendidikan : ${satuanPendidikan}
+   - Nama Penyusun : ${namaPenyusun}
+   - Mata Pelajaran / Fase : ${mapelFase}
+   - Kelas / Semester : ${kelasSemester}
+   - Topik / Sub topik atau Tema / Sub Tema : ${topikSubTopik}
+   - Alokasi Waktu : ${alokasiWaktu}
+   - Tahun Pelajaran : ${tahunPelajaran}
+
+B. **Fitur Identifikasi**: 
+   - Kesiapan & Karakteristik Peserta Didik: ${pesertaDidik}
+   - Analisis Materi Pelajaran: ${materiPelajaran}
+   - Dimensi Profil Lulusan (DPL): ${dplText}
+
+C. **Fitur Desain Pembelajaran**:
    - Capaian Pembelajaran (CP): ${cp}
    - Lintas Disiplin Ilmu: ${lintasIlmu}
-   - Tujuan Pembelajaran
-   - Topik & Alokasi Waktu: ${topik} (${waktu})
    - Praktik Pedagogis: ${pedagogis}
-   - Kemitraan: ${kemitraan} | Lingkungan: ${lingkungan} | Digital: ${pemanfaatanDigital}
-3. **Pengalaman Belajar**:
-   - Awal (Prinsip: ${prinsipText})
-   - Inti (Fokus: ${fokusPengalaman})
-   - Penutup
-4. **Asesmen Pembelajaran**:
-   - Asesmen Awal: ${asesmenAwal}
-   - Asesmen Proses: ${asesmenProses}
-   - Asesmen Akhir: ${asesmenAkhir}`;
+   - Kemitraan Pembelajaran: ${kemitraan}
+   - Lingkungan Pembelajaran: ${lingkungan}
+   - Pemanfaatan Digital: ${pemanfaatanDigital}
+
+D. **Fitur Pengalaman Belajar**:
+   - Prinsip Pembelajaran Mendalam: ${prinsipText} (Bermakna, Berkesadaran, Menggembirakan)
+   - 1. Memahami: ${pengalamanMemahami}
+   - 2. Mengaplikasikan: ${pengalamanMengaplikasikan}
+   - 3. Merefleksikan: ${pengalamanMerefleksikan}
+
+E. **Fitur Asesmen Pembelajaran**:
+   - Asesmen Awal (Diagnostic): ${asesmenAwal}
+   - Asesmen Proses (Formative): ${asesmenProses}
+   - Asesmen Akhir (Summative): ${asesmenAkhir}`;
             } else {
                 // TEMPLATE PROMPT LKPD SISWA
                 template = `${aiInstruction}
@@ -811,30 +871,47 @@ Bertindaklah sebagai Spesialis Pengembang Lembar Kerja Peserta Didik (LKPD) Inte
 
 Buatkan **Lembar Kerja Peserta Didik (LKPD) Siap Pakai untuk Siswa** berdasarkan parameter berikut:
 - **Target Platform AI**: ${targetAI}
-- **Mata Pelajaran & Fase/Kelas**: ${mapel}
-- **Topik Pembelajaran**: ${topik}
-- **Alokasi Waktu**: ${waktu}
+- **Satuan Pendidikan**: ${satuanPendidikan}
+- **Nama Penyusun**: ${namaPenyusun}
+- **Mata Pelajaran / Fase**: ${mapelFase}
+- **Kelas / Semester**: ${kelasSemester}
+- **Topik / Sub topik atau Tema / Sub Tema**: ${topikSubTopik}
+- **Alokasi Waktu**: ${alokasiWaktu}
+- **Tahun Pelajaran**: ${tahunPelajaran}
 - **Model Pembelajaran**: ${pedagogis}
-- **Dimensi Profil Lulusan (DPL) yang Ditingkatkan**: ${dplText}
-- **Prinsip Pembelajaran**: ${prinsipText}
+- **Dimensi Profil Lulusan (DPL)**: ${dplText}
+- **Prinsip Pembelajaran Mendalam**: ${prinsipText}
 
 ${pdfInstruction}
 
 --- STRUKTUR ISI DOKUMEN LKPD SISWA ---
-1. **Header LKPD**:
+A. **Identitas Modul / Pembelajaran (Header LKPD)**:
    - Judul LKPD Menarik & Bahasa Ramah Siswa
+   - Satuan Pendidikan : ${satuanPendidikan}
+   - Nama Penyusun : ${namaPenyusun}
+   - Mata Pelajaran / Fase : ${mapelFase}
+   - Kelas / Semester : ${kelasSemester}
+   - Topik / Sub topik atau Tema / Sub Tema : ${topikSubTopik}
+   - Alokasi Waktu : ${alokasiWaktu}
+   - Tahun Pelajaran : ${tahunPelajaran}
    - Identitas Siswa/Kelompok (Nama, Kelas, Tanggal)
-   - Capaian & Tujuan Pembelajaran Singkat: ${cp}
-2. **Petunjuk Penggunaan & Alat/Bahan**:
-   - Petunjuk kerja yang jelas dan memotivasi
-   - Integrasi Digital: ${pemanfaatanDigital}
-3. **Aktivitas Pembelajaran Mendalam**:
-   - **Stimulasi & Pertanyaan Pemantik**: Menggugah rasa ingin tahu siswa tentang topik ${topik}
-   - **Langkah Kerja / Eksplorasi Kelompok**: Berbasis ${pedagogis} (Fokus: ${fokusPengalaman})
-   - **Ruang Diskusi & Hasil Observasi**: Tabel/Isian tempat siswa mencatat ide & solusi
-4. **Evaluasi & Refleksi Diri**:
-   - Pertanyaan Reflektif (Mengukur kesadaran belajar/Mindful & Bermakna)
-   - Lembar Penilaian Mandiri/Teman Sejawat`;
+
+B. **Fitur Identifikasi (Petunjuk & Target Profil)**:
+   - Petunjuk Penggunaan & Pemanfaatan Digital (${pemanfaatanDigital})
+   - Dimensi Profil Lulusan (DPL): ${dplText}
+
+C. **Fitur Desain Pembelajaran**:
+   - Capaian Pembelajaran Singkat: ${cp}
+   - Integrasi Lintas Disiplin Ilmu: ${lintasIlmu}
+
+D. **Fitur Pengalaman Belajar (Prinsip: ${prinsipText})**:
+   - **1. Memahami**: Pertanyaan Pemantik & Stimulasi Materi (${pengalamanMemahami})
+   - **2. Mengaplikasikan**: Langkah Kerja, Eksplorasi Kelompok & Pemecahan Masalah (${pengalamanMengaplikasikan})
+   - **3. Merefleksikan**: Diskusi Kelompok, Kesimpulan & Refleksi Belajar (${pengalamanMerefleksikan})
+
+E. **Fitur Asesmen Pembelajaran**:
+   - Lembar Ceklist Asesmen Proses
+   - Lembar Evaluasi Akhir / Refleksi Diri & Teman Sejawat`;
             }
 
             document.getElementById('emptyPromptState').style.display = 'none';
