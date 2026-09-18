@@ -274,7 +274,7 @@
             height: 16px;
         }
 
-        /* KHUSUS OUTPUT PROMPT BOX */
+        /* OUTPUT PROMPT BOX */
         .output-box-empty {
             border: 2px dashed #cbd5e1;
             border-radius: var(--radius-md);
@@ -291,7 +291,7 @@
 
         .output-box {
             width: 100%;
-            height: 360px;
+            height: 380px;
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 12px;
             background-color: #f8fafc;
@@ -305,7 +305,7 @@
             line-height: 1.6;
         }
 
-        /* BOX TIPS MENGGUNAKAN AI */
+        /* TIPS CARD */
         .tips-card {
             background-color: #eff6ff;
             border: 1px solid #bfdbfe;
@@ -378,7 +378,7 @@
         }
 
         .btn-copy {
-            background-color: #0d9488; /* Tosca / Dark Teal */
+            background-color: #0d9488;
         }
 
         .btn-copy:hover {
@@ -386,7 +386,7 @@
         }
 
         .btn-print {
-            background-color: #e11d48; /* Crimson / Merah */
+            background-color: #e11d48;
         }
 
         .btn-print:hover {
@@ -416,23 +416,52 @@
             font-weight: 700;
         }
 
-        /* CSS KHUSUS CETAK PDF */
+        /* CSS KHUSUS CETAK/PRINT DOKUMEN AGAR RAPI DAN MENARIK */
         @media print {
-            body * {
-                visibility: hidden;
+            @page {
+                size: A4;
+                margin: 15mm 15mm 15mm 15mm;
             }
-            #outputPrompt, #outputPrompt * {
-                visibility: visible;
+
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                padding: 0;
             }
-            #outputPrompt {
-                position: absolute;
-                left: 0;
-                top: 0;
+
+            .hero-banner, .left-column, .tips-card, .btn-group, footer, .card-header-title, .card-header-desc {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .right-column {
                 width: 100%;
-                height: auto;
+                position: static;
+            }
+
+            .card {
                 border: none;
-                font-size: 14px;
-                white-space: pre-wrap;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            #outputPrompt {
+                display: block !important;
+                visibility: visible !important;
+                width: 100% !important;
+                height: auto !important;
+                border: none !important;
+                background: white !important;
+                color: #000000 !important;
+                font-family: 'Plus Jakarta Sans', sans-serif !important;
+                font-size: 11pt !important;
+                line-height: 1.6 !important;
+                white-space: pre-wrap !important;
             }
         }
     </style>
@@ -496,9 +525,9 @@
                         <div class="form-group">
                             <label>Format Hasil Output yang Diminta ke AI</label>
                             <select id="formatOutputAI">
+                                <option value="html_pdf">HTML & CSS Pro (A4 Print-Ready, Tabel Matriks Berwarna & Rapi)</option>
                                 <option value="tabel_pdf">Tabel Matriks Dokumen (Siap Copy ke PDF/Word)</option>
                                 <option value="dokumen_lengkap">Dokumen Resmi (Format Judul, Bab & Paragraf)</option>
-                                <option value="html_pdf">Kode HTML/CSS Siap Download & Cetak PDF</option>
                             </select>
                         </div>
                     </div>
@@ -741,7 +770,20 @@
             }
 
             let pdfInstruction = '';
-            if (formatOutputAI === 'tabel_pdf') {
+            if (formatOutputAI === 'html_pdf') {
+                pdfInstruction = `--- PERINTAH FORMAT VISUAL DOKUMEN (HTML & CSS PROFESSIONAL) ---
+Sajikan seluruh hasil dalam satu kode **HTML & CSS LENGKAP (A4 Print Ready)** yang sangat RAPI, INDAH, dan PROFESIONAL. 
+Petunjuk Desain CSS HTML:
+1. Gunakan font 'Plus Jakarta Sans' atau 'Arial' dengan warna teks gelap (#0f172a).
+2. Buat Kop/Header Dokumen yang elegan dengan batas garis ganda warna biru (#2563eb).
+3. Untuk **A. Identitas Modul**, gunakan Tabel Matriks 2 Kolom tanpa border berat (menggunakan latar selang-seling soft / zebra-striping).
+4. Untuk **B. Identifikasi** & **C. Desain**, gunakan Tabel dengan Header Berwarna Biru (#2563eb) dan teks putih.
+5. Untuk **D. Pengalaman Belajar**, gunakan Kotak Aksen (Callout Box / Card) berwarna lembut:
+   - Box Memahami (Latar Biru Muda #eff6ff, Border #bfdbfe)
+   - Box Mengaplikasikan (Latar Hijau Muda #f0fdf4, Border #bbf7d0)
+   - Box Merefleksikan (Latar Kuning Muda #fefce8, Border #fef08a)
+6. Sertakan CSS '@media print' agar siap dicetak langsung ke PDF melalui browser secara sempurna tanpa terpotong.`;
+            } else if (formatOutputAI === 'tabel_pdf') {
                 pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
 Buatkan hasil dalam bentuk **DOKUMEN TABEL MATRIKS LENGKAP** yang disesuaikan untuk langsung dicetak menjadi dokumen PDF atau disalin ke MS Word. Gunakan header tabel yang jelas, garis pemisah, dan format teks yang rapi.`;
             } else if (formatOutputAI === 'dokumen_lengkap') {
@@ -753,9 +795,6 @@ Gunakan struktur dokumen sebagai berikut:
 3. C. FITUR DESAIN PEMBELAJARAN
 4. D. FITUR PENGALAMAN BELAJAR (MEMAHAMI, MENGAPLIKASIKAN, MEREFLEKSIKAN)
 5. E. FITUR ASESMEN PEMBELAJARAN`;
-            } else if (formatOutputAI === 'html_pdf') {
-                pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
-Sajikan seluruh hasil dalam satu blok **KODE HTML & CSS LENGKAP (A4 Print Ready)**. Include style CSS "@media print" sehingga ketika dibuka di browser dapat langsung di-cetak ke PDF.`;
             }
 
             // Identitas Inputs
