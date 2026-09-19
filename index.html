@@ -550,19 +550,13 @@
                             <label>Satuan Pendidikan</label>
                             <input type="text" id="satuanPendidikan" placeholder="Contoh: SMAN 8 Raja Ampat">
                         </div>
-                        
-                        <!-- DUA KOLOM UNTUK NAMA PENYUSUN & NIP PENYUSUN -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Nama Penyusun</label>
-                                <input type="text" id="namaPenyusun" placeholder="Contoh: Winanto Tri Hapsoro, S.Pd.I., Gr.">
-                            </div>
-                            <div class="form-group">
-                                <label>NIP Penyusun</label>
-                                <input type="text" id="nipPenyusun" placeholder="Contoh: 19880101 201501 1 001">
-                            </div>
-                        </div>
 
+                        <!-- TEMPAT DAN TANGGAL PEMBUATAN -->
+                        <div class="form-group">
+                            <label>Tempat & Tanggal Pembuatan Dokumen</label>
+                            <input type="text" id="tempatTanggal" placeholder="Contoh: Raja Ampat, 15 Juli 2024">
+                        </div>
+                        
                         <!-- DUA KOLOM UNTUK NAMA KEPALA SEKOLAH & NIP KEPALA SEKOLAH -->
                         <div class="form-row">
                             <div class="form-group">
@@ -572,6 +566,18 @@
                             <div class="form-group">
                                 <label>NIP Kepala Sekolah</label>
                                 <input type="text" id="nipKepalaSekolah" placeholder="Contoh: 19750512 199903 1 002">
+                            </div>
+                        </div>
+
+                        <!-- DUA KOLOM UNTUK NAMA PENYUSUN & NIP PENYUSUN -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nama Penyusun</label>
+                                <input type="text" id="namaPenyusun" placeholder="Contoh: Winanto Tri Hapsoro, S.Pd.I., Gr.">
+                            </div>
+                            <div class="form-group">
+                                <label>NIP Penyusun</label>
+                                <input type="text" id="nipPenyusun" placeholder="Contoh: 19880101 201501 1 001">
                             </div>
                         </div>
 
@@ -812,11 +818,13 @@ Petunjuk Desain CSS HTML:
    - Box Memahami (Latar Biru Muda #eff6ff, Border #bfdbfe)
    - Box Mengaplikasikan (Latar Hijau Muda #f0fdf4, Border #bbf7d0)
    - Box Merefleksikan (Latar Kuning Muda #fefce8, Border #fef08a)
-6. Di bagian paling bawah dokumen, sertakan **Kolom Lembar Pengesahan / Tanda Tangan** yang rapi dengan format 2 kolom (Kiri: Guru Penyusun & NIP; Kanan: Mengetahui Kepala Sekolah & NIP).
+6. Di bagian paling bawah dokumen, sertakan **Kolom Lembar Pengesahan / Tanda Tangan** yang rapi dengan format 2 kolom:
+   - Posisi KIRI: Mengetahui Kepala Sekolah & NIP.
+   - Posisi KANAN: Cantumkan Tanggal/Tempat Pembuatan, di bawahnya Guru Penyusun & NIP.
 7. Sertakan CSS '@media print' agar siap dicetak langsung ke PDF melalui browser secara sempurna tanpa terpotong.`;
             } else if (formatOutputAI === 'tabel_pdf') {
                 pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
-Buatkan hasil dalam bentuk **DOKUMEN TABEL MATRIKS LENGKAP** yang disesuaikan untuk langsung dicetak menjadi dokumen PDF atau disalin ke MS Word. Gunakan header tabel yang jelas, garis pemisah, format teks yang rapi, serta sertakan Kolom Pengesahan Tanda Tangan (Guru Penyusun & Kepala Sekolah beserta NIP) di akhir dokumen.`;
+Buatkan hasil dalam bentuk **DOKUMEN TABEL MATRIKS LENGKAP** yang disesuaikan untuk langsung dicetak menjadi dokumen PDF atau disalin ke MS Word. Gunakan header tabel yang jelas, garis pemisah, format teks yang rapi, serta sertakan Kolom Pengesahan Tanda Tangan (Sisi Kiri: Mengetahui Kepala Sekolah; Sisi Kanan: Tempat & Tanggal Pembuatan, Guru Penyusun) di akhir dokumen.`;
             } else if (formatOutputAI === 'dokumen_lengkap') {
                 pdfInstruction = `--- PERINTAH FORMAT DOKUMEN ---
 Sajikan hasil akhir dalam bentuk **DOKUMEN RESMI**.
@@ -826,11 +834,12 @@ Gunakan struktur dokumen sebagai berikut:
 3. C. FITUR DESAIN PEMBELAJARAN
 4. D. FITUR PENGALAMAN BELAJAR (MEMAHAMI, MENGAPLIKASIKAN, MEREFLEKSIKAN)
 5. E. FITUR ASESMEN PEMBELAJARAN
-6. F. LEMBAR PENGESAHAN / TANDA TANGAN (Guru Penyusun & Kepala Sekolah beserta NIP)`;
+6. F. LEMBAR PENGESAHAN / TANDA TANGAN (Kiri: Kepala Sekolah; Kanan: Tempat/Tanggal & Guru Penyusun)`;
             }
 
             // Identitas Inputs
             const satuanPendidikan = document.getElementById('satuanPendidikan').value || '[Satuan Pendidikan]';
+            const tempatTanggal = document.getElementById('tempatTanggal').value || '[Tempat, Tanggal Pembuatan]';
             const namaPenyusun = document.getElementById('namaPenyusun').value || '[Nama Penyusun]';
             const nipPenyusun = document.getElementById('nipPenyusun').value || '[NIP Penyusun]';
             const namaKepalaSekolah = document.getElementById('namaKepalaSekolah').value || '[Nama Kepala Sekolah]';
@@ -893,6 +902,7 @@ Bertindaklah sebagai Ahli Kurikulum dan Pengembang Perencanaan Pembelajaran Mend
 Buatkan **Rencana Pembelajaran Mendalam (RPM / Modul Ajar)** berdasarkan parameter berikut:
 - **Target Platform AI**: ${targetAI}
 - **Satuan Pendidikan**: ${satuanPendidikan}
+- **Tempat & Tanggal Pembuatan**: ${tempatTanggal}
 - **Nama Penyusun**: ${namaPenyusun}
 - **NIP Penyusun**: ${nipPenyusun}
 - **Nama Kepala Sekolah**: ${namaKepalaSekolah}
@@ -913,6 +923,7 @@ A. **Identitas Modul / Pembelajaran**:
    - Satuan Pendidikan : ${satuanPendidikan}
    - Nama Penyusun : ${namaPenyusun} (NIP: ${nipPenyusun})
    - Mengetahui Kepala Sekolah : ${namaKepalaSekolah} (NIP: ${nipKepalaSekolah})
+   - Tempat & Tanggal Pembuatan : ${tempatTanggal}
    - Mata Pelajaran / Fase : ${mapelFase}
    - Kelas / Semester : ${kelasSemester}
    - Topik / Sub topik atau Tema / Sub Tema : ${topikSubTopik}
@@ -944,9 +955,20 @@ E. **Fitur Asesmen Pembelajaran**:
    - Asesmen Akhir (Summative): ${asesmenAkhir}
 
 F. **Lembar Pengesahan / Tanda Tangan**:
-   - Buatkan blok area tanda tangan di akhir dokumen yang terbagi 2 kolom:
-     * Kolom Kiri: Guru Mata Pelajaran / Penyusun (${namaPenyusun}, NIP. ${nipPenyusun})
-     * Kolom Kanan: Mengetahui Kepala Sekolah (${namaKepalaSekolah}, NIP. ${nipKepalaSekolah})`;
+   - Buatkan blok area tanda tangan di akhir dokumen terbagi 2 kolom:
+     * Kolom KIRI: 
+       Mengetahui,
+       Kepala Sekolah
+       
+       (${namaKepalaSekolah})
+       NIP. ${nipKepalaSekolah}
+
+     * Kolom KANAN:
+       ${tempatTanggal}
+       Guru Mata Pelajaran / Penyusun
+       
+       (${namaPenyusun})
+       NIP. ${nipPenyusun}`;
             } else {
                 // TEMPLATE PROMPT LKPD SISWA
                 template = `${aiInstruction}
@@ -956,6 +978,7 @@ Bertindaklah sebagai Spesialis Pengembang Lembar Kerja Peserta Didik (LKPD) Inte
 Buatkan **Lembar Kerja Peserta Didik (LKPD) Siap Pakai untuk Siswa** berdasarkan parameter berikut:
 - **Target Platform AI**: ${targetAI}
 - **Satuan Pendidikan**: ${satuanPendidikan}
+- **Tempat & Tanggal Pembuatan**: ${tempatTanggal}
 - **Nama Penyusun**: ${namaPenyusun}
 - **NIP Penyusun**: ${nipPenyusun}
 - **Nama Kepala Sekolah**: ${namaKepalaSekolah}
@@ -977,6 +1000,7 @@ A. **Identitas Modul / Pembelajaran (Header LKPD)**:
    - Satuan Pendidikan : ${satuanPendidikan}
    - Nama Penyusun : ${namaPenyusun} (NIP: ${nipPenyusun})
    - Mengetahui Kepala Sekolah : ${namaKepalaSekolah} (NIP: ${nipKepalaSekolah})
+   - Tempat & Tanggal Pembuatan : ${tempatTanggal}
    - Mata Pelajaran / Fase : ${mapelFase}
    - Kelas / Semester : ${kelasSemester}
    - Topik / Sub topik atau Tema / Sub Tema : ${topikSubTopik}
@@ -1002,7 +1026,9 @@ E. **Fitur Asesmen Pembelajaran**:
    - Lembar Evaluasi Akhir / Refleksi Diri & Teman Sejawat
 
 F. **Lembar Pengesahan / Tanda Tangan**:
-   - Sertakan kolom pengesahan sederhana di bagian bawah dokumen (Guru Mata Pelajaran ${namaPenyusun} - NIP. ${nipPenyusun} & Mengetahui Kepala Sekolah ${namaKepalaSekolah} - NIP. ${nipKepalaSekolah})`;
+   - Buatkan blok area tanda tangan di bagian bawah dokumen terbagi 2 kolom:
+     * Kolom KIRI: Mengetahui Kepala Sekolah (${namaKepalaSekolah} - NIP. ${nipKepalaSekolah})
+     * Kolom KANAN: ${tempatTanggal}, Guru Mata Pelajaran (${namaPenyusun} - NIP. ${nipPenyusun})`;
             }
 
             document.getElementById('emptyPromptState').style.display = 'none';
