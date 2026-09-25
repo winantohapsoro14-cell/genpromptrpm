@@ -829,6 +829,15 @@
           <div class="form-group"><label>Minggu efektif</label><input type="number" id="cpMgg" min="1" placeholder="Contoh: 16"></div></div>
           <button type="button" class="chip" onclick="fromHE()">⬇ Ambil dari Analisis Hari Efektif</button>
         </div>
+        <div class="section-box"><div class="section-title">Tanda Tangan Dokumen</div>
+          <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 10px">Nama & NIP terisi otomatis dari tab RPM & LKPD. Ubah di sini jika berbeda.</p>
+          <div class="form-row"><div class="form-group"><label>Tempat Pembuatan</label><input type="text" id="cpTempat" placeholder="Contoh: Waisai"></div>
+          <div class="form-group"><label>Tanggal Pembuatan</label><input type="date" id="cpTgl"></div></div>
+          <div class="form-row"><div class="form-group"><label>Nama Kepala Sekolah</label><input type="text" id="cpKS" placeholder="Nama & gelar Kepala Sekolah"></div>
+          <div class="form-group"><label>NIP Kepala Sekolah</label><input type="text" id="cpNIPKS" placeholder="NIP Kepala Sekolah"></div></div>
+          <div class="form-row"><div class="form-group"><label>Nama Penyusun</label><input type="text" id="cpPenyusun" placeholder="Nama & gelar Penyusun"></div>
+          <div class="form-group"><label>NIP Penyusun</label><input type="text" id="cpNIPPenyusun" placeholder="NIP Penyusun"></div></div>
+        </div>
         <div class="section-box">
           <div class="form-group"><label>AI yang Digunakan</label><select id="cpAI"><option>ChatGPT</option><option>Claude</option><option>Gemini</option><option>Umum</option></select></div>
           <div class="form-group"><label>Format Hasil</label><select id="cpFmt"><option value="tabel">Tabel matriks (siap salin ke Word/PDF)</option><option value="html">HTML & CSS A4 siap cetak</option></select></div>
@@ -1215,7 +1224,7 @@ F. **Lembar Pengesahan / Tanda Tangan**:
             l.forEach(t=>{const c=document.createElement('button');c.type='button';c.className='chip';c.textContent=t;c.onclick=()=>{$(id).value=t;$(id).dispatchEvent(new Event('input'));};w.appendChild(c);});$(id).insertAdjacentElement('afterend',w);});})();
 
         // ===== SIMPAN IDENTITAS OTOMATIS =====
-        const ID_F=['satuanPendidikan','tempatTanggal','namaKepalaSekolah','nipKepalaSekolah','namaPenyusun','nipPenyusun','mapelFase','tahunPelajaran'];
+        const ID_F=['satuanPendidikan','tempatTanggal','namaKepalaSekolah','nipKepalaSekolah','namaPenyusun','nipPenyusun','mapelFase','tahunPelajaran','cpKS','cpNIPKS','cpPenyusun','cpNIPPenyusun','cpTempat'];
         function restoreId(){try{const s=JSON.parse(localStorage.getItem('gp_identitas')||'{}');ID_F.forEach(k=>{if(s[k])$(k).value=s[k];});}catch(e){}
           if(!$('tahunPelajaran').value){const n=new Date(),y=n.getMonth()>=6?n.getFullYear():n.getFullYear()-1;$('tahunPelajaran').value=y+'/'+(y+1);}}
         ID_F.forEach(k=>$(k).addEventListener('input',()=>{try{const s={};ID_F.forEach(x=>s[x]=$(x).value);localStorage.setItem('gp_identitas',JSON.stringify(s));}catch(e){}}));
@@ -1225,6 +1234,8 @@ F. **Lembar Pengesahan / Tanda Tangan**:
         const FASE={1:'A',2:'A',3:'B',4:'B',5:'C',6:'C',7:'D',8:'D',9:'D',10:'E',11:'F',12:'F'};
         function setFase(){$('cpFase').value=FASE[$('cpKelas').value.replace('Kelas ','')];}
         $('cpKelas').value='Kelas 10';setFase();
+        function fillCPSign(){['cpKS','cpNIPKS','cpPenyusun','cpNIPPenyusun'].forEach((id,i)=>{const src=['namaKepalaSekolah','nipKepalaSekolah','namaPenyusun','nipPenyusun'][i];if(!$(id).value&&$(src).value)$(id).value=$(src).value;});if(!$('cpTgl').value)$('cpTgl').value=iso(new Date());if(!$('cpTempat').value&&$('tempatTanggal').value)$('cpTempat').value=$('tempatTanggal').value.split(',')[0].trim();}
+        setTimeout(fillCPSign,0);
         function fromHE(){if(!heLast){alert('Hitung dulu di tab Analisis Hari Efektif.');return;}$('cpJP').value=V('heJP')||'';$('cpMgg').value=Math.floor(heLast.minggu);}
         function toCP(){fromHE();$('cpSem').value=$('heSem').value;showTab('tab-cp');}
         function genCP(){
@@ -1244,6 +1255,7 @@ Data:
 - Satuan Pendidikan: ${g('satuanPendidikan','[Satuan Pendidikan]')}
 - Mata Pelajaran: ${V('cpMapel')} | ${V('cpKelas')} | ${V('cpFase')?'Fase '+V('cpFase'):''} | Semester ${V('cpSem')}
 - Tahun Pelajaran: ${g('tahunPelajaran','[Tahun Pelajaran]')}
+- Tempat, Tanggal Pembuatan: ${g('cpTempat','[Tempat]')}, ${V('cpTgl')?fd(V('cpTgl')):'[Tanggal]'}
 - Materi/Bab: ${g('cpMateri','(susun dari CP)')}
 - Capaian Pembelajaran (CP): ${cp}
 - Alokasi waktu: ${waktu}
@@ -1254,7 +1266,7 @@ Buatkan secara berurutan:
           if(o.includes('TP'))s+=`${n++}. TUJUAN PEMBELAJARAN (TP) format ${V('cpTPfmt')}: tiap TP memuat satu kompetensi dan satu lingkup materi, terukur, urut dari mudah ke sulit.\n`;
           if(o.includes('ATP'))s+=`${n++}. ALUR TUJUAN PEMBELAJARAN (ATP): urutkan TP secara logis dalam tabel (No, TP, Materi, Alokasi JP, Semester, Dimensi Profil Lulusan, Asesmen). Total JP harus sesuai alokasi waktu di atas.\n`;
           if(o.includes('KKTP'))s+=`${n++}. KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN (KKTP) dengan format ${V('cpKfmt')}: satu kriteria/rubrik untuk tiap TP.\n`;
-          s+=`\n${fmt}\nAkhiri dengan blok tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('namaKepalaSekolah','[Kepala Sekolah]')}, NIP. ${g('nipKepalaSekolah','[NIP]')}); KANAN ${g('tempatTanggal','[Tempat, Tanggal]')}, Guru Mata Pelajaran (${g('namaPenyusun','[Penyusun]')}, NIP. ${g('nipPenyusun','[NIP]')}).`;
+          s+=`\n${fmt}\nAkhiri dengan blok tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('cpKS','[Kepala Sekolah]')}, NIP. ${g('cpNIPKS','[NIP]')}); KANAN ${g('tempatTanggal','[Tempat, Tanggal]')}, Guru Mata Pelajaran (${g('cpPenyusun','[Penyusun]')}, NIP. ${g('cpNIPPenyusun','[NIP]')}).`;
           $('cpEmpty').style.display='none';$('cpBox').style.display='block';$('cpOut').value=s;}
 
         // ===== TAB HARI EFEKTIF =====
