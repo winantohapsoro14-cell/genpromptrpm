@@ -473,6 +473,30 @@
                 white-space: pre-wrap !important;
             }
         }
+
+        /* TAB & CHIPS */
+        .tabbar{max-width:1280px;margin:-8px auto 24px;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
+        .tabbtn{flex:1 1 200px;padding:14px 18px;border:1px solid var(--border-color);background:#fff;border-radius:12px;font:700 14px 'Plus Jakarta Sans',sans-serif;color:var(--text-muted);cursor:pointer}
+        .tabbtn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .tabbtn:focus-visible,.chip:focus-visible{outline:3px solid var(--accent-yellow)}
+        .tabpane{display:none}.tabpane.active{display:block}
+        .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+        .chip{font:500 11px 'Plus Jakarta Sans',sans-serif;padding:4px 10px;border-radius:999px;border:1px solid #bfdbfe;background:#eff6ff;color:#1e40af;cursor:pointer}
+        .chip:hover{background:#dbeafe}
+        input[type=date],input[type=number]{width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:8px;font:13px 'Plus Jakarta Sans',sans-serif}
+        .he-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+        .he-table th{background:var(--primary);color:#fff;padding:8px;text-align:center}
+        .he-table td{border:1px solid var(--border-color);padding:7px 8px;text-align:center}
+        .he-table td:first-child{text-align:left}
+        .he-table tr.tot td{font-weight:800;background:#eff6ff}
+        .he-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+        .he-sum div{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px;text-align:center;font-size:12px}
+        .he-sum b{display:block;font-size:22px;color:var(--primary-dark)}
+        .li-row{display:flex;justify-content:space-between;gap:8px;font-size:12px;background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:6px 10px;margin-top:6px}
+        .li-row button{border:none;background:none;color:#e11d48;cursor:pointer;font-weight:700}
+        @media print{.tabbar{display:none!important}.tabpane:not(.active){display:none!important}
+          #cpOut,#heP{display:block!important;width:100%!important;height:auto!important;border:none!important;font-size:11pt!important;white-space:pre-wrap!important}
+          .he-table th{background:#2563eb!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
     </style>
 </head>
 <body>
@@ -499,6 +523,12 @@
         </div>
     </div>
 
+    <div class="tabbar" role="tablist">
+        <button class="tabbtn active" data-tab="tab-rpm" onclick="showTab('tab-rpm')">📘 RPM & LKPD</button>
+        <button class="tabbtn" data-tab="tab-cp" onclick="showTab('tab-cp')">🎯 Analisis CP · TP · ATP · KKTP</button>
+        <button class="tabbtn" data-tab="tab-he" onclick="showTab('tab-he')">📅 Analisis Hari Efektif</button>
+    </div>
+    <div id="tab-rpm" class="tabpane active">
     <!-- MAIN CONTAINER -->
     <div class="container">
         
@@ -527,7 +557,7 @@
                             <select id="targetAI">
                                 <option value="ChatGPT">ChatGPT (Optimasi Markdown & Tabel)</option>
                                 <option value="Claude">Claude AI (Optimasi Pembelajaran Mendalam & Struktur Detail)</option>
-                                <option value="Gemini">Google Gemini (Optimasi Format Ringkas & Responsif)</option>
+                                <option value="Gemini">Google Gemini (Optimasi Pembelajaran Mendalam & Struktur Detail)</option>
                                 <option value="Umum">Umum / Lainnya</option>
                             </select>
                         </div>
@@ -775,6 +805,87 @@
 
     </div>
 
+    </div>
+    <!-- TAB ANALISIS CP-TP-ATP-KKTP -->
+    <div id="tab-cp" class="tabpane"><div class="container">
+      <div class="left-column"><div class="card">
+        <h2 class="card-header-title">Analisis CP → TP → ATP → KKTP</h2>
+        <p class="card-header-desc">Cukup pilih dari daftar. Identitas sekolah & guru otomatis diambil dari tab RPM & LKPD.</p>
+        <datalist id="mapelList"><option>Pendidikan Agama Islam</option><option>Pendidikan Agama Kristen</option><option>Pendidikan Agama Katolik</option><option>Pendidikan Pancasila</option><option>Bahasa Indonesia</option><option>Bahasa Inggris</option><option>Matematika</option><option>Matematika Tingkat Lanjut</option><option>IPA</option><option>IPAS</option><option>Biologi</option><option>Fisika</option><option>Kimia</option><option>IPS</option><option>Sejarah</option><option>Geografi</option><option>Ekonomi</option><option>Sosiologi</option><option>Informatika</option><option>PJOK</option><option>Seni Budaya</option><option>Seni Musik</option><option>Seni Rupa</option><option>Prakarya</option><option>Koding dan Kecerdasan Artifisial</option><option>Muatan Lokal</option><option>Bimbingan Konseling</option></datalist>
+        <div class="section-box">
+          <div class="form-row"><div class="form-group"><label>Mata Pelajaran</label><input type="text" id="cpMapel" list="mapelList" placeholder="Pilih dari daftar atau ketik"></div>
+          <div class="form-group"><label>Kelas</label><select id="cpKelas" onchange="setFase()"><option>Kelas 1</option><option>Kelas 2</option><option>Kelas 3</option><option>Kelas 4</option><option>Kelas 5</option><option>Kelas 6</option><option>Kelas 7</option><option>Kelas 8</option><option>Kelas 9</option><option>Kelas 10</option><option>Kelas 11</option><option>Kelas 12</option></select></div></div>
+          <div class="form-row"><div class="form-group"><label>Fase</label><select id="cpFase"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select></div>
+          <div class="form-group"><label>Semester</label><select id="cpSem"><option>Ganjil</option><option>Genap</option></select></div></div>
+          <div class="form-group"><label>Elemen / Bab / Materi (opsional)</label><textarea id="cpMateri" rows="2" placeholder="Kosongkan agar AI menyusun materi dari CP"></textarea></div>
+          <div class="form-group"><label>Capaian Pembelajaran (CP)</label><textarea id="cpTeks" rows="3" placeholder="Tempel CP dari dokumen resmi, atau biarkan kosong"></textarea>
+          <label class="checkbox-item" style="margin-top:6px"><input type="checkbox" id="cpCari" checked> Jika kosong, minta AI menuliskan CP resmi sesuai fase (tetap saya verifikasi)</label></div>
+        </div>
+        <div class="section-box"><div class="section-title">Hasil yang diminta</div>
+          <div class="checkbox-grid"><label class="checkbox-item"><input type="checkbox" name="cpOpt" value="Analisis CP" checked> Analisis CP</label><label class="checkbox-item"><input type="checkbox" name="cpOpt" value="TP" checked> Rumusan TP</label><label class="checkbox-item"><input type="checkbox" name="cpOpt" value="ATP" checked> Alur TP (ATP)</label><label class="checkbox-item"><input type="checkbox" name="cpOpt" value="KKTP" checked> KKTP</label></div>
+          <div class="form-group" style="margin-top:12px"><label>Format Rumusan TP</label><select id="cpTPfmt"><option>Kompetensi + Lingkup Materi (Kurikulum Merdeka)</option><option>ABCD (Audience, Behavior, Condition, Degree)</option></select></div>
+          <div class="form-group"><label>Format KKTP</label><select id="cpKfmt"><option>Rubrik 4 level (Sangat Baik, Baik, Cukup, Perlu Bimbingan)</option><option>Kriteria deskriptif (Tercapai / Belum Tercapai)</option><option>Interval nilai + deskripsi kompetensi</option></select></div>
+          <div class="form-row"><div class="form-group"><label>JP per minggu</label><input type="number" id="cpJP" min="1" placeholder="Contoh: 3"></div>
+          <div class="form-group"><label>Minggu efektif</label><input type="number" id="cpMgg" min="1" placeholder="Contoh: 16"></div></div>
+          <button type="button" class="chip" onclick="fromHE()">⬇ Ambil dari Analisis Hari Efektif</button>
+        </div>
+        <div class="section-box">
+          <div class="form-group"><label>AI yang Digunakan</label><select id="cpAI"><option>ChatGPT</option><option>Claude</option><option>Gemini</option><option>Umum</option></select></div>
+          <div class="form-group"><label>Format Hasil</label><select id="cpFmt"><option value="tabel">Tabel matriks (siap salin ke Word/PDF)</option><option value="html">HTML & CSS A4 siap cetak</option></select></div>
+        </div>
+        <div class="btn-group"><button type="button" class="btn" onclick="genCP()">🚀 Generate Prompt Analisis</button></div>
+      </div></div>
+      <div class="right-column"><div class="card">
+        <h2 class="card-header-title">Hasil Prompt Analisis</h2>
+        <p class="card-header-desc">Salin, lalu tempel ke AI pilihan Anda. Boleh diedit dulu.</p>
+        <div id="cpEmpty" class="output-box-empty"><div class="icon">🎯</div><strong>Belum ada prompt</strong></div>
+        <div id="cpBox" style="display:none"><textarea id="cpOut" class="output-box"></textarea>
+        <div class="btn-group"><button type="button" class="btn btn-copy" onclick="copyEl('cpOut')">Salin Prompt</button><button type="button" class="btn btn-print" onclick="window.print()">Cetak</button></div></div>
+      </div></div>
+    </div></div>
+    <!-- TAB HARI EFEKTIF -->
+    <div id="tab-he" class="tabpane"><div class="container">
+      <div class="left-column"><div class="card">
+        <h2 class="card-header-title">Analisis Hari Efektif</h2>
+        <p class="card-header-desc">Hitung otomatis hari, minggu, dan JP efektif per bulan. Libur bergerak (Idulfitri, Nyepi, dll.) tambahkan sesuai kalender pendidikan Anda.</p>
+        <div class="section-box">
+          <div class="form-row"><div class="form-group"><label>Tahun Pelajaran</label><select id="heTahun" onchange="heDefaults()"></select></div>
+          <div class="form-group"><label>Semester</label><select id="heSem" onchange="heDefaults()"><option>Ganjil</option><option>Genap</option></select></div></div>
+          <div class="form-row"><div class="form-group"><label>Mulai semester</label><input type="date" id="heMulai"></div>
+          <div class="form-group"><label>Akhir semester</label><input type="date" id="heAkhir"></div></div>
+          <div class="form-row"><div class="form-group"><label>Hari belajar / minggu</label><select id="heHari"><option value="5">5 hari (Senin–Jumat)</option><option value="6">6 hari (Senin–Sabtu)</option></select></div>
+          <div class="form-group"><label>JP mapel / minggu</label><input type="number" id="heJP" min="1" placeholder="Contoh: 3"></div></div>
+        </div>
+        <div class="section-box"><div class="section-title">Libur & kegiatan non-efektif</div>
+          <div class="form-row"><div class="form-group"><label>Dari tanggal</label><input type="date" id="heLM"></div>
+          <div class="form-group"><label>Sampai (kosong = 1 hari)</label><input type="date" id="heLA"></div></div>
+          <div class="form-group"><label>Keterangan</label><select id="heKet"><option>Libur Nasional</option><option>Cuti Bersama</option><option>Libur Hari Besar Keagamaan</option><option>Libur Semester</option><option>Libur Daerah</option><option>PTS / ASTS</option><option>PAS / SAS / ASAJ</option><option>Class Meeting</option><option>MPLS</option><option>Projek Penguatan Profil (P5)</option><option>Pembagian Rapor</option><option>ANBK / Asesmen Nasional</option><option>Kegiatan Sekolah Lainnya</option></select></div>
+          <div class="btn-group" style="margin-top:0"><button type="button" class="btn" onclick="addLibur()">＋ Tambah</button><button type="button" class="btn btn-reset" onclick="addFixed()">Muat libur tetap nasional</button></div>
+          <div id="heList"></div>
+        <details class="section-box" style="margin-top:14px"><summary style="cursor:pointer;font-weight:700;font-size:13px;color:var(--primary)">📷 Punya kalender pendidikan (gambar/PDF)? Impor dengan AI</summary>
+          <p style="font-size:12px;color:var(--text-muted);margin:10px 0">1) Salin prompt, 2) kirim ke AI bersama gambar/PDF kalender, 3) tempel balasannya di bawah, 4) klik Impor.</p>
+          <div class="btn-group" style="margin-top:0"><button type="button" class="btn btn-reset" onclick="copyImpPrompt()">1. Salin Prompt untuk AI</button></div>
+          <textarea id="heImp" rows="6" style="margin-top:10px" placeholder="Tempel balasan AI di sini, contoh:&#10;MULAI: 2026-07-13&#10;AKHIR: 2026-12-19&#10;2026-08-17 | Libur Nasional: HUT RI&#10;2026-09-14 s.d. 2026-09-18 | PTS"></textarea>
+          <div class="btn-group"><button type="button" class="btn" onclick="imporAI()">4. Impor ke Daftar Libur</button></div></details>
+        
+        </div>
+        <div class="section-box"><div class="section-title">Prompt untuk AI</div>
+          <div class="form-group"><label>Mata Pelajaran</label><input type="text" id="heMapel" list="mapelList" placeholder="Pilih dari daftar atau ketik"></div>
+          <div class="form-row"><div class="form-group"><label>AI yang Digunakan</label><select id="heAI"><option>ChatGPT</option><option>Claude</option><option>Gemini</option><option>Umum</option></select></div>
+          <div class="form-group"><label>Format Hasil</label><select id="heFmt"><option value="tabel">Tabel matriks (salin ke Word/PDF)</option><option value="html">HTML & CSS A4 siap cetak</option></select></div></div>
+          <p style="font-size:12px;color:var(--text-muted)">Setelah dihitung, klik <b>Buat Prompt AI</b> di panel hasil.</p>
+        </div>
+        <div class="btn-group"><button type="button" class="btn" onclick="hitung()">📊 Hitung Hari Efektif</button></div>
+      </div></div>
+      <div class="right-column"><div class="card">
+        <h2 class="card-header-title">Hasil Analisis</h2>
+        <div id="heEmpty" class="output-box-empty"><div class="icon">📅</div><strong>Belum ada hitungan</strong><p style="font-size:12px">Isi tanggal lalu klik Hitung.</p></div>
+        <div id="heOut"></div>
+        <div id="heBtns" class="btn-group" style="display:none;flex-wrap:wrap"><button type="button" class="btn btn-copy" onclick="copyHE()">Salin Ringkasan</button><button type="button" class="btn btn-print" onclick="window.print()">Cetak</button><button type="button" class="btn" onclick="promptHE()">Buat Prompt AI</button><button type="button" class="btn btn-reset" onclick="toCP()">Kirim ke Analisis CP</button></div>
+        <textarea id="heP" class="output-box" style="display:none;margin-top:14px"></textarea>
+        <div id="hePBtn" class="btn-group" style="display:none"><button type="button" class="btn btn-copy" onclick="copyEl('heP')">Salin Prompt</button></div>
+      </div></div>
+    </div></div>
     <!-- FOOTER NAMA PENGEMBANG -->
     <footer>
         <div class="footer-card">
@@ -805,7 +916,7 @@
             } else if (targetAI === 'Claude') {
                 aiInstruction = `[OPTIMASI CLAUDE AI: Berikan analisis mendalam pada setiap komponen, sertakan contoh operasional konkret, dan gunakan tata bahasa profesional.]`;
             } else if (targetAI === 'Gemini') {
-                aiInstruction = `[OPTIMASI GEMINI: Sajikan format dokumen yang rapi, berikan poin-poin yang padat, dan hindari pemotongan teks.]`;
+                aiInstruction = `[OPTIMASI GEMINI: Susun pembelajaran mendalam (deep learning) yang bermakna, relevan, dan menyenangkan, dengan struktur dokumen yang detail dan terurai selangkah demi selangkah.]`;
             } else {
                 aiInstruction = `[Instruksi: Buatkan respon berbentuk dokumen perencanaan yang komprehensif.]`;
             }
@@ -1063,10 +1174,169 @@ F. **Lembar Pengesahan / Tanda Tangan**:
 
         function resetForm() {
             document.getElementById('promptForm').reset();
+            setTimeout(restoreId,0);
             document.getElementById('emptyPromptState').style.display = 'block';
             document.getElementById('outputContainer').style.display = 'none';
             document.getElementById('outputPrompt').value = '';
         }
+
+        // ===== TAB =====
+        function showTab(id){document.querySelectorAll('.tabpane').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));window.scrollTo({top:0,behavior:'smooth'});}
+        const $=id=>document.getElementById(id), V=id=>($(id)?$(id).value.trim():'');
+        function copyEl(id){const t=$(id);t.select();document.execCommand('copy');alert('Prompt berhasil disalin!');}
+
+        // ===== PILIHAN CERDAS (chip) =====
+        const SUGG={
+          pesertaDidik:['Pengetahuan awal heterogen','Dominan gaya belajar visual','Dominan gaya belajar kinestetik','Minat tinggi pada praktik','Perlu penguatan literasi dasar','Beragam latar budaya lokal'],
+          materiPelajaran:['Pengetahuan faktual','Pengetahuan konseptual','Pengetahuan prosedural','Pengetahuan metakognitif'],
+          lintasIlmu:['Bahasa Indonesia (laporan/presentasi)','Matematika (data & grafik)','IPS (konteks masyarakat)','Seni Budaya (produk kreatif)','Informatika (digital)','Muatan lokal Papua'],
+          kemitraan:['Orang tua siswa','Tokoh adat/masyarakat','Komunitas lingkungan','Puskesmas / instansi terkait','Pelaku usaha lokal','Alumni'],
+          lingkungan:['Ruang kelas','Laboratorium','Taman/halaman sekolah','Lingkungan sekitar sekolah','Ruang virtual (LMS/WhatsApp)','Budaya belajar saling menghargai'],
+          pemanfaatanDigital:['Quizizz','Kahoot','Liveworksheets','Canva','Google Form','Padlet','YouTube (video pemantik)','Perpustakaan digital','Rumah Pendidikan / Merdeka Mengajar'],
+          pengalamanMemahami:['Mengamati gambar/video pemantik','Mengamati lingkungan sekitar','Menyimak pertanyaan pemantik','Membaca teks/infografis','Brainstorming'],
+          pengalamanMengaplikasikan:['Diskusi kelompok','Analisis studi kasus','Eksperimen/praktikum','Membuat produk/proyek','Simulasi/role play','Investigasi lapangan'],
+          pengalamanMerefleksikan:['Jurnal refleksi','Presentasi hasil','Kesimpulan bersama','Umpan balik teman sejawat','Refleksi diri (apa yang dipelajari)'],
+          asesmenAwal:['Kuis singkat pengetahuan awal','Pertanyaan pemantik lisan','Survei minat & gaya belajar','Mind map awal'],
+          asesmenProses:['Observasi kinerja','Penilaian antar teman','Lembar kerja/LKPD','Rubrik diskusi','Portofolio'],
+          asesmenAkhir:['Tes tertulis','Penilaian produk/proyek','Presentasi + rubrik','Kuis digital','Unjuk kerja']};
+        function addChip(id,t){const i=$(id);if(i.value.includes(t))return;i.value=i.value?i.value+', '+t:t;i.dispatchEvent(new Event('input'));}
+        Object.entries(SUGG).forEach(([id,l])=>{const d=document.createElement('div');d.className='chips';
+          l.forEach(t=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent='+ '+t;b.onclick=()=>addChip(id,t);d.appendChild(b);});
+          $(id).insertAdjacentElement('afterend',d);});
+        // chip tanggal & fase
+        (function(){const b=document.createElement('button');b.type='button';b.className='chip';b.textContent='+ Tanggal hari ini';
+          b.onclick=()=>{const t=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});const i=$('tempatTanggal');i.value=(i.value.replace(/,?\s*\d.*$/,'').trim()||'')+(i.value.trim()&&!/\d/.test(i.value)?', ':(i.value?', ':''))+t;i.dispatchEvent(new Event('input'));};
+          const d=document.createElement('div');d.className='chips';d.appendChild(b);$('tempatTanggal').insertAdjacentElement('afterend',d);
+          const f=document.createElement('div');f.className='chips';
+          ['Fase A','Fase B','Fase C','Fase D','Fase E','Fase F'].forEach(x=>{const c=document.createElement('button');c.type='button';c.className='chip';c.textContent=x;
+            c.onclick=()=>{const i=$('mapelFase');i.value=(i.value.split('/')[0].trim()||'')+(i.value.trim()?' / ':'')+x;i.dispatchEvent(new Event('input'));};f.appendChild(c);});
+          $('mapelFase').insertAdjacentElement('afterend',f);
+          [['kelasSemester',['Kelas 7 / Ganjil','Kelas 7 / Genap','Kelas 8 / Ganjil','Kelas 8 / Genap','Kelas 9 / Ganjil','Kelas 9 / Genap','Kelas 10 / Ganjil','Kelas 10 / Genap','Kelas 11 / Ganjil','Kelas 11 / Genap','Kelas 12 / Ganjil','Kelas 12 / Genap']],['alokasiWaktu',['2 Pertemuan (4 JP)','3 Pertemuan (6 JP)','4 Pertemuan (8 JP)','1 Pertemuan (2 JP)']]].forEach(([id,l])=>{const w=document.createElement('div');w.className='chips';
+            l.forEach(t=>{const c=document.createElement('button');c.type='button';c.className='chip';c.textContent=t;c.onclick=()=>{$(id).value=t;$(id).dispatchEvent(new Event('input'));};w.appendChild(c);});$(id).insertAdjacentElement('afterend',w);});})();
+
+        // ===== SIMPAN IDENTITAS OTOMATIS =====
+        const ID_F=['satuanPendidikan','tempatTanggal','namaKepalaSekolah','nipKepalaSekolah','namaPenyusun','nipPenyusun','mapelFase','tahunPelajaran'];
+        function restoreId(){try{const s=JSON.parse(localStorage.getItem('gp_identitas')||'{}');ID_F.forEach(k=>{if(s[k])$(k).value=s[k];});}catch(e){}
+          if(!$('tahunPelajaran').value){const n=new Date(),y=n.getMonth()>=6?n.getFullYear():n.getFullYear()-1;$('tahunPelajaran').value=y+'/'+(y+1);}}
+        ID_F.forEach(k=>$(k).addEventListener('input',()=>{try{const s={};ID_F.forEach(x=>s[x]=$(x).value);localStorage.setItem('gp_identitas',JSON.stringify(s));}catch(e){}}));
+        restoreId();
+
+        // ===== TAB ANALISIS CP-TP-ATP-KKTP =====
+        const FASE={1:'A',2:'A',3:'B',4:'B',5:'C',6:'C',7:'D',8:'D',9:'D',10:'E',11:'F',12:'F'};
+        function setFase(){$('cpFase').value=FASE[$('cpKelas').value.replace('Kelas ','')];}
+        $('cpKelas').value='Kelas 10';setFase();
+        function fromHE(){if(!heLast){alert('Hitung dulu di tab Analisis Hari Efektif.');return;}$('cpJP').value=V('heJP')||'';$('cpMgg').value=Math.floor(heLast.minggu);}
+        function toCP(){fromHE();$('cpSem').value=$('heSem').value;showTab('tab-cp');}
+        function genCP(){
+          if(!V('cpMapel')){alert('Pilih mata pelajaran dulu.');return;}
+          const o=[...document.querySelectorAll('input[name=cpOpt]:checked')].map(c=>c.value);
+          if(!o.length){alert('Centang minimal satu hasil analisis.');return;}
+          const ai={ChatGPT:'[OPTIMASI CHATGPT: Tanpa basa-basi, langsung berikan dokumen lengkap dan terstruktur.]',Claude:'[OPTIMASI CLAUDE: Berikan analisis mendalam dengan contoh konkret dan bahasa profesional.]',Gemini:'[OPTIMASI GEMINI: Susun pembelajaran mendalam dengan struktur dokumen yang detail dan terurai selangkah demi selangkah.]',Umum:'[Buat dokumen perencanaan yang komprehensif.]'}[V('cpAI')];
+          const jp=+V('cpJP'),mg=+V('cpMgg'),waktu=jp&&mg?`${jp} JP/minggu × ${mg} minggu efektif = ${jp*mg} JP`:'(bagi proporsional sesuai kedalaman materi)';
+          const cp=V('cpTeks')||(($('cpCari').checked)?'(Tuliskan Capaian Pembelajaran resmi terbaru dari Kemendikdasmen/BSKAP untuk mapel & fase ini; tandai bagian yang perlu saya verifikasi ke dokumen resmi)':'(belum diisi)');
+          const g=(id,d)=>V(id)||d;
+          const fmt=V('cpFmt')==='html'?'Sajikan dalam satu kode HTML & CSS A4 print-ready dengan tabel berheader biru (#2563eb), rapi, dan @media print.':'Sajikan sebagai TABEL MATRIKS yang bisa langsung disalin ke Word/PDF.';
+          let n=1,s=`${ai}
+
+Bertindaklah sebagai Ahli Kurikulum Merdeka dan Pengembang Perangkat Ajar.
+
+Data:
+- Satuan Pendidikan: ${g('satuanPendidikan','[Satuan Pendidikan]')}
+- Mata Pelajaran: ${V('cpMapel')} | ${V('cpKelas')} | ${V('cpFase')?'Fase '+V('cpFase'):''} | Semester ${V('cpSem')}
+- Tahun Pelajaran: ${g('tahunPelajaran','[Tahun Pelajaran]')}
+- Materi/Bab: ${g('cpMateri','(susun dari CP)')}
+- Capaian Pembelajaran (CP): ${cp}
+- Alokasi waktu: ${waktu}
+
+Buatkan secara berurutan:
+`;
+          if(o.includes('Analisis CP'))s+=`${n++}. ANALISIS CP: pecah CP menjadi elemen, kompetensi (kata kerja operasional), lingkup materi, dan konteks/pengetahuan prasyarat dalam tabel.\n`;
+          if(o.includes('TP'))s+=`${n++}. TUJUAN PEMBELAJARAN (TP) format ${V('cpTPfmt')}: tiap TP memuat satu kompetensi dan satu lingkup materi, terukur, urut dari mudah ke sulit.\n`;
+          if(o.includes('ATP'))s+=`${n++}. ALUR TUJUAN PEMBELAJARAN (ATP): urutkan TP secara logis dalam tabel (No, TP, Materi, Alokasi JP, Semester, Dimensi Profil Lulusan, Asesmen). Total JP harus sesuai alokasi waktu di atas.\n`;
+          if(o.includes('KKTP'))s+=`${n++}. KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN (KKTP) dengan format ${V('cpKfmt')}: satu kriteria/rubrik untuk tiap TP.\n`;
+          s+=`\n${fmt}\nAkhiri dengan blok tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('namaKepalaSekolah','[Kepala Sekolah]')}, NIP. ${g('nipKepalaSekolah','[NIP]')}); KANAN ${g('tempatTanggal','[Tempat, Tanggal]')}, Guru Mata Pelajaran (${g('namaPenyusun','[Penyusun]')}, NIP. ${g('nipPenyusun','[NIP]')}).`;
+          $('cpEmpty').style.display='none';$('cpBox').style.display='block';$('cpOut').value=s;}
+
+        // ===== TAB HARI EFEKTIF =====
+        const BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        let heList=[],heLast=null;
+        const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        const pd=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c);};
+        const fd=s=>pd(s).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+        (function(){const n=new Date(),y=n.getMonth()>=6?n.getFullYear():n.getFullYear()-1;for(let t=y-1;t<=y+1;t++)$('heTahun').add(new Option(t+'/'+(t+1),t,t===y,t===y));$('heSem').value=n.getMonth()>=6?'Ganjil':'Genap';heDefaults();})();
+        function heDefaults(){const t=+$('heTahun').value,g=$('heSem').value==='Ganjil';$('heMulai').value=g?t+'-07-13':(t+1)+'-01-05';$('heAkhir').value=g?t+'-12-19':(t+1)+'-06-26';}
+        function renderList(){$('heList').innerHTML=heList.map((x,i)=>`<div class="li-row"><span>${fd(x.a)}${x.a!==x.b?' – '+fd(x.b):''} · ${x.ket}</span><button type="button" onclick="heList.splice(${i},1);renderList()" aria-label="Hapus">✕</button></div>`).join('');}
+        function addLibur(){const a=$('heLM').value;if(!a){alert('Isi tanggal mulai libur/kegiatan.');return;}const b=$('heLA').value||a;if(pd(b)<pd(a)){alert('Tanggal akhir lebih awal dari tanggal mulai.');return;}
+          heList.push({a,b,ket:$('heKet').value});renderList();$('heLM').value='';$('heLA').value='';}
+        function addFixed(){if(!$('heMulai').value)return;const s=pd($('heMulai').value),e=pd($('heAkhir').value);
+          [[0,1,'Tahun Baru Masehi'],[4,1,'Hari Buruh'],[5,1,'Hari Lahir Pancasila'],[7,17,'HUT Kemerdekaan RI'],[11,25,'Hari Raya Natal']].forEach(([m,d,k])=>{
+            for(let y=s.getFullYear();y<=e.getFullYear();y++){const t=new Date(y,m,d);if(t>=s&&t<=e&&!heList.some(x=>x.a===iso(t)))heList.push({a:iso(t),b:iso(t),ket:'Libur Nasional: '+k});}});
+          renderList();}
+        function hitung(){
+          if(!$('heMulai').value||!$('heAkhir').value||pd($('heAkhir').value)<pd($('heMulai').value)){alert('Isi tanggal mulai dan akhir semester dengan benar.');return;}
+          const s=pd($('heMulai').value),e=pd($('heAkhir').value),hp=+$('heHari').value,jp=+$('heJP').value||0,ex={};
+          heList.forEach(x=>{for(let d=pd(x.a);d<=pd(x.b);d.setDate(d.getDate()+1)){if(!ex[iso(d)])ex[iso(d)]=x.ket;}});
+          const R={},C={};
+          for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){const k=d.getFullYear()*12+d.getMonth(),r=R[k]||(R[k]={n:BLN[d.getMonth()]+' '+d.getFullYear(),t:0,w:0,x:0,ef:0}),w=d.getDay();
+            r.t++;if(w===0||(hp===5&&w===6))r.w++;else if(ex[iso(d)]){r.x++;C[ex[iso(d)]]=(C[ex[iso(d)]]||0)+1;}else r.ef++;}
+          const rows=Object.values(R),T=rows.reduce((a,r)=>({t:a.t+r.t,w:a.w+r.w,x:a.x+r.x,ef:a.ef+r.ef}),{t:0,w:0,x:0,ef:0});
+          const mg=T.ef/hp,jpe=Math.floor(mg*jp);heLast={minggu:mg,ef:T.ef,jp:jpe,rows,T,C};
+          const jud=`Analisis Hari Efektif Semester ${$('heSem').value} TP ${$('heTahun').value}/${+$('heTahun').value+1}`+(V('satuanPendidikan')?' – '+V('satuanPendidikan'):'');
+          $('heOut').innerHTML=`<h3 style="font-size:15px">${jud}</h3>
+            <div class="he-sum"><div><b>${T.ef}</b>hari efektif</div><div><b>${mg.toFixed(1)}</b>minggu efektif</div><div><b>${jp?jpe:'–'}</b>JP efektif${jp?'':' (isi JP/minggu)'}</div></div>
+            <div style="overflow-x:auto"><table class="he-table"><tr><th>Bulan</th><th>Jumlah Hari</th><th>Hari Non-Belajar</th><th>Libur & Non-KBM</th><th>Hari Efektif</th></tr>
+            ${rows.map(r=>`<tr><td>${r.n}</td><td>${r.t}</td><td>${r.w}</td><td>${r.x}</td><td>${r.ef}</td></tr>`).join('')}
+            <tr class="tot"><td>Total</td><td>${T.t}</td><td>${T.w}</td><td>${T.x}</td><td>${T.ef}</td></tr></table></div>
+            ${Object.keys(C).length?'<b style="font-size:12px">Rincian libur & non-KBM (hari kerja):</b><ul class="tips-list">'+Object.entries(C).map(([k,v])=>`<li>${k}: ${v} hari</li>`).join('')+'</ul>':''}`;
+          $('heEmpty').style.display='none';$('heBtns').style.display='flex';}
+        function heText(){const h=heLast;return `Analisis Hari Efektif Semester ${$('heSem').value} TP ${$('heTahun').value}/${+$('heTahun').value+1}\nPeriode: ${fd($('heMulai').value)} s.d. ${fd($('heAkhir').value)} (${$('heHari').value} hari belajar/minggu)\n`+h.rows.map(r=>`- ${r.n}: ${r.t} hari, non-belajar ${r.w}, libur/non-KBM ${r.x}, efektif ${r.ef}`).join('\n')+`\nTotal hari efektif: ${h.T.ef} hari = ${h.minggu.toFixed(1)} minggu efektif`+(+$('heJP').value?`; JP efektif: ${h.jp} JP (${$('heJP').value} JP/minggu)`:'')+'\nRincian libur/non-KBM: '+(Object.entries(h.C).map(([k,v])=>`${k} ${v} hari`).join('; ')||'-');}
+        function copyHE(){const t=document.createElement('textarea');t.value=heText();document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Ringkasan berhasil disalin!');}
+        function promptHE(){
+          if(!heLast){alert('Klik Hitung Hari Efektif dulu.');return;}
+          const ai={ChatGPT:'[OPTIMASI CHATGPT: Tanpa basa-basi, langsung berikan dokumen lengkap dan terstruktur.]',Claude:'[OPTIMASI CLAUDE: Berikan analisis mendalam dengan bahasa profesional dan catatan yang jelas.]',Gemini:'[OPTIMASI GEMINI: Susun pembelajaran mendalam dengan struktur dokumen yang detail dan terurai selangkah demi selangkah.]',Umum:'[Buat dokumen administrasi yang komprehensif.]'}[V('heAI')];
+          const fmt=V('heFmt')==='html'?'Sajikan dalam satu kode HTML & CSS A4 print-ready: kop elegan bergaris ganda biru (#2563eb), tabel berheader biru teks putih, baris zebra, dan @media print.':'Sajikan sebagai TABEL MATRIKS rapi yang bisa langsung disalin ke Word/PDF.';
+          const mp=V('heMapel')||V('cpMapel')||'[Mata Pelajaran]',g=(id,d)=>V(id)||d;
+          $('heP').value=`${ai}
+
+Bertindaklah sebagai Ahli Administrasi Kurikulum Sekolah.
+
+Buatkan dokumen resmi ANALISIS HARI EFEKTIF dan PROGRAM SEMESTER (PROMES) berdasarkan data hasil perhitungan di bawah ini.
+- Satuan Pendidikan: ${g('satuanPendidikan','[Satuan Pendidikan]')}
+- Mata Pelajaran: ${mp}
+- Tahun Pelajaran: ${$('heTahun').value}/${+$('heTahun').value+1} | Semester ${$('heSem').value}
+
+ATURAN: Gunakan angka persis seperti pada data. Jangan menghitung ulang atau mengubah jumlah hari, minggu, dan JP.
+
+Isi dokumen:
+1. Tabel Analisis Hari Efektif per bulan (jumlah hari, hari non-belajar, libur/non-KBM, hari efektif) beserta baris total.
+2. Rekapitulasi: total hari efektif, minggu efektif, dan JP efektif.
+3. Rincian libur dan kegiatan non-KBM.
+4. Usulan Program Semester: distribusi minggu efektif dan JP per bulan, disesuaikan dengan kegiatan non-KBM pada data.
+
+${fmt}
+Akhiri dengan tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('namaKepalaSekolah','[Kepala Sekolah]')}, NIP. ${g('nipKepalaSekolah','[NIP]')}); KANAN ${g('tempatTanggal','[Tempat, Tanggal]')}, Guru Mata Pelajaran (${g('namaPenyusun','[Penyusun]')}, NIP. ${g('nipPenyusun','[NIP]')}).
+
+--- DATA ---
+`+heText();
+          $('heP').style.display='block';$('hePBtn').style.display='flex';$('heP').scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+        // ===== IMPOR KALENDER PENDIDIKAN VIA AI =====
+        function copyImpPrompt(){const t=document.createElement('textarea');
+          t.value=`Saya melampirkan Kalender Pendidikan (gambar/PDF) untuk Semester ${$('heSem').value} Tahun Pelajaran ${$('heTahun').value}/${+$('heTahun').value+1}. Baca seluruh tanggal, warna, dan legendanya dengan teliti.
+Keluarkan HANYA daftar berikut tanpa penjelasan tambahan, satu baris per kegiatan:
+MULAI: YYYY-MM-DD (hari pertama masuk semester ini)
+AKHIR: YYYY-MM-DD (hari terakhir semester ini)
+YYYY-MM-DD | Keterangan
+YYYY-MM-DD s.d. YYYY-MM-DD | Keterangan
+Sertakan semua libur (nasional, cuti bersama, keagamaan, semester, daerah) dan kegiatan tanpa KBM (PTS, PAS, class meeting, MPLS, P5, pembagian rapor). Abaikan Sabtu/Minggu biasa. Jika ada tanggal yang kurang jelas, tulis di baris terpisah diawali tanda "?".`;
+          document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Prompt disalin. Kirim ke AI bersama gambar/PDF kalender pendidikan.');}
+        function imporAI(){let n=0;const q=[];
+          $('heImp').value.split('\n').forEach(l=>{l=l.trim();let m;
+            if(m=l.match(/^MULAI:\s*(\d{4}-\d{2}-\d{2})/i)){$('heMulai').value=m[1];return;}
+            if(m=l.match(/^AKHIR:\s*(\d{4}-\d{2}-\d{2})/i)){$('heAkhir').value=m[1];return;}
+            if(m=l.match(/^(\d{4}-\d{2}-\d{2})(?:\s*(?:s\.?\s?d\.?|-|–)\s*(\d{4}-\d{2}-\d{2}))?\s*\|\s*(.+)$/i)){const a=m[1],b=m[2]||a;if(pd(b)>=pd(a)){heList.push({a,b,ket:m[3].trim()});n++;}}
+            else if(l.startsWith('?'))q.push(l);});
+          renderList();alert(n+' baris libur/kegiatan diimpor.'+(q.length?'\nPerlu dicek manual:\n'+q.join('\n'):'')+'\nPeriksa daftar, lalu klik Hitung Hari Efektif.');}
     </script>
 </body>
 </html>
