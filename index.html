@@ -554,12 +554,14 @@
                         </div>
                         <div class="form-group">
                             <label>Pilih AI yang Akan Digunakan</label>
-                            <select id="targetAI">
+                            <select id="targetAI" onchange="syncAIGambar(this.value)">
                                 <option value="ChatGPT">ChatGPT (Optimasi Markdown & Tabel)</option>
+                                <option value="ChatGPT_Gambar">ChatGPT (Gambar LKPD)</option>
                                 <option value="Claude">Claude AI (Optimasi Pembelajaran Mendalam & Struktur Detail)</option>
                                 <option value="Gemini">Google Gemini (Optimasi Pembelajaran Mendalam & Struktur Detail)</option>
                                 <option value="Umum">Umum / Lainnya</option>
                             </select>
+                            <p id="gambarHint" style="display:none;font-size:12px;color:#b45309;margin-top:6px">⚠️ Mode Gambar hanya berfungsi di ChatGPT (fitur pembuatan gambar). Hasilnya berupa gambar, bukan dokumen teks yang bisa diedit.</p>
                         </div>
                         <div class="form-group">
                             <label>Format Hasil Output yang Diminta ke AI</label>
@@ -567,7 +569,9 @@
                                 <option value="html_pdf">HTML & CSS Pro (A4 Print-Ready, Tabel Matriks Berwarna & Rapi)</option>
                                 <option value="tabel_pdf">Tabel Matriks Dokumen (Siap Copy ke PDF/Word)</option>
                                 <option value="dokumen_lengkap">Dokumen Resmi (Format Judul, Bab & Paragraf)</option>
+                                <option value="gambar_a4">Gambar A4 LKPD Siap Cetak (Khusus ChatGPT)</option>
                             </select>
+                            <script>document.currentScript.previousElementSibling.addEventListener('change',function(){if(this.value==='gambar_a4')syncAIGambar('ChatGPT_Gambar');});</script>
                         </div>
                     </div>
 
@@ -787,6 +791,9 @@
                         <button type="button" class="btn btn-copy" onclick="copyPrompt()">Salin Prompt</button>
                         <button type="button" class="btn btn-print" onclick="printPDF()">Cetak (PDF)</button>
                     </div>
+                    <div class="btn-group" style="margin-top:0">
+                        <button type="button" id="btnBukaAI" class="btn btn-reset" onclick="bukaAI(document.getElementById('targetAI').value)">↗ Buka ChatGPT</button>
+                    </div>
                 </div>
             </div>
 
@@ -849,7 +856,8 @@
         <p class="card-header-desc">Salin, lalu tempel ke AI pilihan Anda. Boleh diedit dulu.</p>
         <div id="cpEmpty" class="output-box-empty"><div class="icon">🎯</div><strong>Belum ada prompt</strong></div>
         <div id="cpBox" style="display:none"><textarea id="cpOut" class="output-box"></textarea>
-        <div class="btn-group"><button type="button" class="btn btn-copy" onclick="copyEl('cpOut')">Salin Prompt</button><button type="button" class="btn btn-print" onclick="window.print()">Cetak</button></div></div>
+        <div class="btn-group"><button type="button" class="btn btn-copy" onclick="copyEl('cpOut')">Salin Prompt</button><button type="button" class="btn btn-print" onclick="window.print()">Cetak</button></div>
+        <div class="btn-group" style="margin-top:0"><button type="button" id="btnBukaAICP" class="btn btn-reset" onclick="bukaAI(V('cpAI'))">↗ Buka AI</button></div></div>
       </div></div>
     </div></div>
     <!-- TAB HARI EFEKTIF -->
@@ -892,7 +900,8 @@
         <div id="heOut"></div>
         <div id="heBtns" class="btn-group" style="display:none;flex-wrap:wrap"><button type="button" class="btn btn-copy" onclick="copyHE()">Salin Ringkasan</button><button type="button" class="btn btn-print" onclick="window.print()">Cetak</button><button type="button" class="btn" onclick="promptHE()">Buat Prompt AI</button><button type="button" class="btn btn-reset" onclick="toCP()">Kirim ke Analisis CP</button></div>
         <textarea id="heP" class="output-box" style="display:none;margin-top:14px"></textarea>
-        <div id="hePBtn" class="btn-group" style="display:none"><button type="button" class="btn btn-copy" onclick="copyEl('heP')">Salin Prompt</button></div>
+        <div id="hePBtn" class="btn-group" style="display:none"><button type="button" class="btn btn-copy" onclick="copyEl('heP')">Salin Prompt</button>
+        <button type="button" id="btnBukaAIHE" class="btn btn-reset" onclick="bukaAI(V('heAI'))">↗ Buka AI</button></div>
       </div></div>
     </div></div>
     <!-- FOOTER NAMA PENGEMBANG -->
@@ -903,6 +912,15 @@
     </footer>
 
     <script>
+        const AI_URL={ChatGPT:'https://chatgpt.com/',ChatGPT_Gambar:'https://chatgpt.com/',Claude:'https://claude.ai/new',Gemini:'https://gemini.google.com/app'};
+        const AI_LABEL={ChatGPT:'ChatGPT',ChatGPT_Gambar:'ChatGPT',Claude:'Claude',Gemini:'Gemini'};
+        function bukaAI(ai){const u=AI_URL[ai];if(!u){alert('Pilih AI (ChatGPT/Claude/Gemini) dulu agar tombol ini bisa membuka situsnya.');return;}window.open(u,'_blank');}
+        function setBtnAI(btnId,ai){const b=document.getElementById(btnId);if(!b)return;if(AI_URL[ai]){b.style.display='';b.textContent='↗ Buka '+AI_LABEL[ai];}else{b.style.display='none';}}
+        function syncAIGambar(val){
+            const ai=document.getElementById('targetAI'),fmt=document.getElementById('formatOutputAI'),hint=document.getElementById('gambarHint');
+            if(val==='ChatGPT_Gambar'){ai.value='ChatGPT_Gambar';fmt.value='gambar_a4';hint.style.display='block';}
+            else{hint.style.display='none';if(fmt.value==='gambar_a4')fmt.value='html_pdf';}
+        }
         function togglePedagogisLainnya() {
             const pedagogisSelect = document.getElementById('pedagogis').value;
             const groupLainnya = document.getElementById('groupPedagogisLainnya');
@@ -922,6 +940,8 @@
             let aiInstruction = '';
             if (targetAI === 'ChatGPT') {
                 aiInstruction = `[OPTIMASI CHATGPT: Hindari basa-basi pembuka/penutup. Langsung berikan output dokumen lengkap dan terstruktur rapi.]`;
+            } else if (targetAI === 'ChatGPT_Gambar') {
+                aiInstruction = `[OPTIMASI CHATGPT - MODE GAMBAR: Jangan berikan jawaban berupa teks, kode, atau tabel. Gunakan fitur pembuatan gambar (image generation) bawaan ChatGPT untuk menghasilkan LANGSUNG SATU GAMBAR LKPD yang bisa dicetak. Jika ada bagian yang perlu diisi tangan oleh siswa (nama, kelas, jawaban), buat sebagai kolom/garis kosong pada gambar, bukan teks terisi.]`;
             } else if (targetAI === 'Claude') {
                 aiInstruction = `[OPTIMASI CLAUDE AI: Berikan analisis mendalam pada setiap komponen, sertakan contoh operasional konkret, dan gunakan tata bahasa profesional.]`;
             } else if (targetAI === 'Gemini') {
@@ -960,6 +980,15 @@ Gunakan struktur dokumen sebagai berikut:
 4. D. FITUR PENGALAMAN BELAJAR (MEMAHAMI, MENGAPLIKASIKAN, MEREFLEKSIKAN)
 5. E. FITUR ASESMEN PEMBELAJARAN
 6. F. LEMBAR PENGESAHAN / TANDA TANGAN (Kiri: Kepala Sekolah; Kanan: Tempat/Tanggal & Guru Penyusun)`;
+            } else if (formatOutputAI === 'gambar_a4') {
+                pdfInstruction = `--- PERINTAH FORMAT GAMBAR (KHUSUS CHATGPT) ---
+Buat SATU GAMBAR Lembar Kerja Peserta Didik (LKPD) berorientasi potret ukuran A4, siap cetak hitam-putih maupun warna. Desain gambar harus memuat:
+1. Kop/header: nama satuan pendidikan, mata pelajaran, kelas/fase, dan kolom isian Nama & Kelas siswa.
+2. Judul kegiatan dan petunjuk pengerjaan singkat.
+3. Ilustrasi/diagram sederhana yang relevan dengan materi (gaya ilustrasi flat, garis bersih, warna lembut, ramah untuk dicetak).
+4. Ruang/kolom kosong bergaris untuk siswa menulis jawaban, sesuai jumlah dan jenis soal/aktivitas yang diminta.
+5. Tata letak rapi, rapat margin wajar untuk kertas A4, teks instruksi jelas dan terbaca.
+Hasilkan sebagai gambar, BUKAN sebagai kode HTML/CSS maupun teks biasa.`;
             }
 
             // Identitas Inputs
@@ -1162,6 +1191,7 @@ F. **Lembar Pengesahan / Tanda Tangan**:
             document.getElementById('emptyPromptState').style.display = 'none';
             document.getElementById('outputContainer').style.display = 'block';
             document.getElementById('outputPrompt').value = template;
+            setBtnAI('btnBukaAI', targetAI);
         }
 
         function copyPrompt() {
@@ -1267,7 +1297,7 @@ Buatkan secara berurutan:
           if(o.includes('ATP'))s+=`${n++}. ALUR TUJUAN PEMBELAJARAN (ATP): urutkan TP secara logis dalam tabel (No, TP, Materi, Alokasi JP, Semester, Dimensi Profil Lulusan, Asesmen). Total JP harus sesuai alokasi waktu di atas.\n`;
           if(o.includes('KKTP'))s+=`${n++}. KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN (KKTP) dengan format ${V('cpKfmt')}: satu kriteria/rubrik untuk tiap TP.\n`;
           s+=`\n${fmt}\nAkhiri dengan blok tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('cpKS','[Kepala Sekolah]')}, NIP. ${g('cpNIPKS','[NIP]')}); KANAN ${g('tempatTanggal','[Tempat, Tanggal]')}, Guru Mata Pelajaran (${g('cpPenyusun','[Penyusun]')}, NIP. ${g('cpNIPPenyusun','[NIP]')}).`;
-          $('cpEmpty').style.display='none';$('cpBox').style.display='block';$('cpOut').value=s;}
+          $('cpEmpty').style.display='none';$('cpBox').style.display='block';$('cpOut').value=s;setBtnAI('btnBukaAICP',V('cpAI'));}
 
         // ===== TAB HARI EFEKTIF =====
         const BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -1330,7 +1360,7 @@ Akhiri dengan tanda tangan 2 kolom: KIRI Mengetahui Kepala Sekolah (${g('namaKep
 
 --- DATA ---
 `+heText();
-          $('heP').style.display='block';$('hePBtn').style.display='flex';$('heP').scrollIntoView({behavior:'smooth',block:'nearest'});}
+          $('heP').style.display='block';$('hePBtn').style.display='flex';setBtnAI('btnBukaAIHE',V('heAI'));$('heP').scrollIntoView({behavior:'smooth',block:'nearest'});}
 
         // ===== IMPOR KALENDER PENDIDIKAN VIA AI =====
         function copyImpPrompt(){const t=document.createElement('textarea');
